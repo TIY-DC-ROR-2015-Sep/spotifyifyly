@@ -43,6 +43,12 @@ class Spotifyifyly < Sinatra::Base
       erb :login
     end
   end
+
+  get"/profile" do
+    user_id = session[:logged_in_user_id]
+    user.find(user_id)
+    erb :profile
+  end
 end
 
 Spotifyifyly.run!
