@@ -2,6 +2,8 @@
 require './db/setup'
 require './lib/all'
 
+User.delete_all
+Song.delete_all
 names = ['andrew', 'devin', 'justin', 'sophia', 'jamaal']
 
 names.each do |name|
@@ -29,5 +31,5 @@ songs = [{
   ]
 
 songs.each do |song|
-  Song.create! title: song[:title], artist: song[:artist], suggested_by_id: 2
+  Song.create! title: song[:title], artist: song[:artist], suggested_by: User.all.sample
 end
