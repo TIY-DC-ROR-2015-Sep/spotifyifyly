@@ -43,6 +43,30 @@ class Spotifyifyly < Sinatra::Base
       erb :login
     end
   end
+
+  get "/vote" do
+    binding.pry
+    #user_id = session[:logged_in_user_id]
+    #song_name ==> from params ==> find id
+
+    #Vote.create! user_id: current_user.id, song_id: 
+    
+    
+    
+    
+  end
+
+
+
+
+
+
+
+
+
+
+
+
 end
 
 Spotifyifyly.run!
