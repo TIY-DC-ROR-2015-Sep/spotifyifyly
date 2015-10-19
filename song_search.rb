@@ -14,7 +14,7 @@ def find_song_spotify song
   s = song.gsub(/\s/,'+')
   r = HTTParty.get("https://api.spotify.com/v1/search?q=#{s}&type=track")
   r["tracks"].map {h Search.new(h)}
-  "#{h["name"]}"
+  "#{h["name"]} by #{}"
 end
 
 def results
