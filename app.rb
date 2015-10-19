@@ -4,6 +4,7 @@ require 'pry'
 require './db/setup'
 require './lib/all'
 
+
 class Spotifyifyly < Sinatra::Base
   enable :sessions
 
@@ -43,6 +44,23 @@ class Spotifyifyly < Sinatra::Base
       erb :login
     end
   end
+
+get "/suggest_song/" do
+  if current_user
+  erb :addition2main
+ else
+   "Please login to suggest a song"
+   erb :login
+end
+end
+
+  post "/suggest_song/" do
+    s = params[:suggested_song].to_s
+    #find_song_spotify s
+    Song.create( title: s)
+    erb :addition2main
+  end
+
 end
 
 Spotifyifyly.run!
