@@ -45,8 +45,7 @@ class Spotifyifyly < Sinatra::Base
   end
 
   get"/profile" do
-    user_id = session[:logged_in_user_id]
-    user.find(user_id)
+    @user_songs = current_user.user_songs
     erb :profile
   end
 

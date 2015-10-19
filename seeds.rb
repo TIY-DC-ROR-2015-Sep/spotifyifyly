@@ -31,5 +31,5 @@ songs = [{
   ]
 
 songs.each do |song|
-  Song.create! title: song[:title], artist: song[:artist], suggested_by: User.all.sample
+  Song.create! title: song[:title], artist: song[:artist], suggested_by: User.find_by(email: "devin@example.com")
 end
