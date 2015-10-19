@@ -1,0 +1,15 @@
+<% if @error %>
+  <p><%= @error %></p>
+<% end %>
+
+<form method="post" action="/handle_login">
+  <label>
+    Email
+    <input type="text" name="email">
+  </label>
+  <label>
+    Password
+    <input type="password" name="password">
+  </label>
+  <button>Login</button>
+</form>
