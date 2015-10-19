@@ -58,7 +58,7 @@ end
   post "/suggest_song/" do
     s = params[:suggested_song].to_s
     #find_song_spotify s
-    Song.create( title: s, suggested_by: current_user.id)
+    Song.create( title: s, suggested_by: current_user)
     erb :addition2main
   end
 
@@ -76,17 +76,6 @@ end
   end
 
 
-
-
-
-
-
-
-
-
-
-
->>>>>>> master
 end
 
 Spotifyifyly.run!
