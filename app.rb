@@ -18,9 +18,11 @@ class Spotifyifyly < Sinatra::Base
 
   get "/" do
     if current_user
-      "You are #{current_user.email}"
+      #"You are #{current_user.email}"
+      erb :index
     else
-      "It works!"
+      #"It works!"
+      erb :index
     end
   end
 
