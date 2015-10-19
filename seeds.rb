@@ -1,6 +1,12 @@
 require './db/setup'
 require './lib/all'
 
+
+
+User.delete_all
+Song.delete_all
+
+
 names = ['andrew', 'devin', 'justin', 'sophia', 'jamaal']
 
 names.each do |name|
@@ -21,12 +27,12 @@ songs = [{
   artist: "Silento"},
   {
   title: "Can't Feel My Face",
-  artist: "The Weekend"},
+  artist: "The Weeknd"},
   {
   title: "Locked Away",
-  artist: "R. City Featuring Adam Levine"},
+  artist: "R. City Featuring Adam Levine"}
   ]
 
 songs.each do |song|
-  Song.create! title: song[:title], artist: song[:artist]
+  Song.create! title: song[:title], artist: song[:artist], suggested_by: User.all.sample
 end
