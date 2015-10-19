@@ -1,9 +1,9 @@
-# -*- coding: utf-8 -*-
 require './db/setup'
 require './lib/all'
 
 User.delete_all
 Song.delete_all
+
 names = ['andrew', 'devin', 'justin', 'sophia', 'jamaal']
 
 names.each do |name|
