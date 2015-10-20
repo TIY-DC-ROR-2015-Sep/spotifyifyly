@@ -48,6 +48,15 @@ class Spotifyifyly < Sinatra::Base
     end
   end
 
+  get "/profile" do
+    if current_user
+      @user_songs = current_user.user_songs
+      erb :profile
+    else
+      redirect to("/login")
+    end
+  end
+
   get "/suggest_song/" do
     if current_user
       erb :addition2main, locals:{ results: nil}
@@ -69,20 +78,13 @@ class Spotifyifyly < Sinatra::Base
     end
   end
 
-
   get "/vote" do
     binding.pry
     #user_id = session[:logged_in_user_id]
     #song_name ==> from params ==> find id
 
     #Vote.create! user_id: current_user.id, song_id:
-
-
-
-
   end
-
-
 end
 
 Spotifyifyly.run!
