@@ -47,21 +47,25 @@ class Spotifyifyly < Sinatra::Base
     end
   end
 
-get "/suggest_song/" do
-  if current_user
-  erb :addition2main, locals:{ results: nil}
- else
-   "Please login to suggest a song"
-   erb :login
-end
-end
+  get "/suggest_song/" do
+    if current_user
+      erb :addition2main, locals:{ results: nil}
+    else
+      "Please login to suggest a song"
+      erb :login
+    end
+  end
 
   post "/suggest_song/" do
-    s = params[:suggested_song].to_s
-    m = Search.find_song_spotify s
-    t = m.first
-    Song.create( title: t[:title], suggested_by: current_user, artist: t[:artist], spotify_preview_url: t[:preview_url])
-erb :addition2main, locals:{ results: t}
+    if current_user
+      s = params[:suggested_song].to_s
+      m = Search.find_song_spotify s
+      t = m.first
+      Song.create( title: t[:title], suggested_by: current_user, artist: t[:artist], spotify_preview_url: t[:preview_url])
+      erb :addition2main, locals:{ results: t}
+    else
+      redirect to "/login"
+    end
   end
 
 
