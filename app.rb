@@ -59,6 +59,7 @@ class Spotifyifyly < Sinatra::Base
       else
         # error message
       end
+      redirect to("/")
     else
       # error message
       erb :login
