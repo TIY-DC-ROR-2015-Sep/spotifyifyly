@@ -70,12 +70,17 @@ class Spotifyifyly < Sinatra::Base
     if current_user
       s = params[:suggested_song].to_s
       m = Search.find_song_spotify s
-      t = m.first
-      Song.create( title: t[:title], suggested_by: current_user, artist: t[:artist], spotify_preview_url: t[:preview_url])
-      erb :addition2main, locals:{ results: t}
+      erb :result_page, locals:{ results: m}
     else
       redirect to "/login"
     end
+  end
+
+  post "/save_song" do
+    j = params[:result]
+    t = JSON.parse(j)
+    Song.create( title: t["title"], suggested_by: current_user, artist: t["artist"], spotify_preview_url: t["preview_url"], album_name: t["album_name"], album_image: t["album_image"])
+    erb :addition2main
   end
 
   get "/vote" do
