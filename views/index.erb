@@ -39,7 +39,7 @@
         </nav>
 
         <!-- this holds the header -->
-        <header class ="row">
+        <header class="row">
             <div class="col-md-12">
                 <br>
                 <br>
@@ -53,11 +53,15 @@
             <img src="images/spotifyifyly.gif" class="img-rounded" alt="Spotifyifyly." width="419" height="67">
             </div>
             <h1><marquee>This Week's Songs</marquee></h1>
-            <div class = "Songs">
+            <div class="Songs">
                 <% Song.all.each do |song| %>
             <li>
                 <strong><%= song.title %></strong> by <%= song.artist %>, suggested by <%= song.suggested_by.name.capitalize %><br>
-                <%= song.genre %><a href = "song.spotify_preview_url"> Preview on Spotify</a><a href="vote"><img src="/images/vote.gif"></a>
+                <%= song.genre %><a href="song.spotify_preview_url"> Preview on Spotify</a>
+                <form action="/vote" method="POST">
+                    <input type="hidden" name="song_id" value="<%= song.id %>">
+                    <button><img src="/images/vote.gif"></button>
+                </form>
             </li>
             <br>
             <% end %>
