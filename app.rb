@@ -22,7 +22,7 @@ class Spotifyifyly < Sinatra::Base
       erb :index
     else
       #"It works!"
-      erb :index
+      erb :other_index
     end
   end
 
@@ -51,11 +51,11 @@ class Spotifyifyly < Sinatra::Base
     #user_id = session[:logged_in_user_id]
     #song_name ==> from params ==> find id
 
-    #Vote.create! user_id: current_user.id, song_id: 
-    
-    
-    
-    
+    #Vote.create! user_id: current_user.id, song_id:
+
+
+
+
   end
 
 

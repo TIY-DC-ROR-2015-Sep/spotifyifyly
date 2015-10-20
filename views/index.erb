@@ -6,8 +6,21 @@
     <title>Spotifyifyly</title>
   </head>
   <body TEXT="#FFFFC3" LINK="#00FFAE" VLINK="#00FFAE" ALINK="#FFFF00">
-    <h1>Text Text Text</h1>
+    <audio src="/audio/Bonnie_Tyler_-_Total_Eclipse_of_the_Heart.mp3" preload="auto" autoplay="autoplay"></audio>
+    <img src="/images/spotifyifyly.gif">
+    <div class="Login">
+    <a href="/login">Login</a>
+    </div>
+    <h1><marquee>This Week's Songs</marquee></h1>
 
-
+    <div class = "Songs">
+    <% Song.all.each do |song| %>
+      <li>
+        <strong><%= song.title %></strong> by <%= song.artist %>, suggested by <%= song.suggested_by.name.capitalize %><br>
+          <%= song.genre %><a href = "song.spotify_preview_url"> Preview on Spotify</a><a href="vote"><img src="/images/vote.gif"></a>
+      </li>
+      <br>
+    <% end %>
+    </div>
   </body>
 </html>

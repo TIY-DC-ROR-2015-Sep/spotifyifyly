@@ -1,0 +1,30 @@
+.account {
+    color: #1ED760;
+}
+
+.text-primary {
+    color: #1ED760;
+}
+
+.control-label {
+    color: #939698;
+}
+
+.songs {
+    color: #1ED760;
+}
+
+.main-page {
+    display: inline-block;
+    background-color: #2E2F33;
+    font-family: Lato, Helvetica, Arial, sans-serif;
+}
+
+.page-header {
+    background-color: #F8F8F8;
+    text-align: center;
+}
+
+.col-md-6 {
+    background-color: #FFF;
+}
