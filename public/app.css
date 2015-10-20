@@ -28,3 +28,21 @@
 .col-md-6 {
     background-color: #FFF;
 }
+
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  margin: 0;
+  font-family: fantasy;
+  text-align:center;
+  background-image: url('/images/starbg.gif');
+  background-repeat: repeat;
+  /*background-size: cover;*/
+}
+
+.login {
+  text-align:left;
+}
