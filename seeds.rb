@@ -24,12 +24,12 @@ songs = [{
   artist: "Silento"},
   {
   title: "Can't Feel My Face",
-  artist: "The Weekend"},
+  artist: "The Weeknd"},
   {
   title: "Locked Away",
-  artist: "R. City Featuring Adam Levine"},
+  artist: "R. City Featuring Adam Levine"}
   ]
 
 songs.each do |song|
-  Song.create! title: song[:title], artist: song[:artist], suggested_by: User.find_by(email: "devin@example.com")
+  Song.create! title: song[:title], artist: song[:artist], suggested_by: User.all.sample
 end

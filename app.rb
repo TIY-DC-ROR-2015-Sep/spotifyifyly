@@ -44,9 +44,13 @@ class Spotifyifyly < Sinatra::Base
     end
   end
 
-  get"/profile" do
-    @user_songs = current_user.user_songs
-    erb :profile
+  get "/profile" do
+    if current_user
+      @user_songs = current_user.user_songs
+      erb :profile
+    else
+      redirect to("/login")
+    end
   end
 
   get "/vote" do

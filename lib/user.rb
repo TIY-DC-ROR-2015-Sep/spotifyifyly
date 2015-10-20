@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
   def user_songs
     user_song_arr = []
     Song.all.each do |song|
-      if song.suggested_by.id == self.id
+      if song.suggested_by_id == self.id
         user_song_arr << song
       end
     end
