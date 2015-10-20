@@ -18,9 +18,11 @@ class Spotifyifyly < Sinatra::Base
 
   get "/" do
     if current_user
-      "You are #{current_user.email}"
+      #"You are #{current_user.email}"
+      erb :index
     else
-      "It works!"
+      #"It works!"
+      erb :homepage
     end
   end
 
@@ -49,11 +51,11 @@ class Spotifyifyly < Sinatra::Base
     #user_id = session[:logged_in_user_id]
     #song_name ==> from params ==> find id
 
-    #Vote.create! user_id: current_user.id, song_id: 
-    
-    
-    
-    
+    #Vote.create! user_id: current_user.id, song_id:
+
+
+
+
   end
 
 
