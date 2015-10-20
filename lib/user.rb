@@ -6,4 +6,14 @@ class User < ActiveRecord::Base
     votes = Vote.where( user_id: id )
     votes.map { |v| v.song } 
   end
+
+  def user_songs
+    user_song_arr = []
+    Song.all.each do |song|
+      if song.suggested_by_id == self.id
+        user_song_arr << song
+      end
+    end
+    user_song_arr
+  end
 end

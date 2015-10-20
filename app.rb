@@ -3,11 +3,13 @@ require 'pry'
 
 require './db/setup'
 require './lib/all'
+require './song_search.rb'
 
 class Spotifyifyly < Sinatra::Base
   enable :sessions
 
   set :logging, true
+  set :session_secret, "my_secret_key_thats_really_secret_i_*swear*"
 
   def current_user
     # If you're logged in, return logged in User
@@ -18,9 +20,11 @@ class Spotifyifyly < Sinatra::Base
 
   get "/" do
     if current_user
-      "You are #{current_user.email}"
+      #"You are #{current_user.email}"
+      erb :index
     else
-      "It works!"
+      #"It works!"
+      erb :homepage
     end
   end
 
@@ -61,6 +65,40 @@ class Spotifyifyly < Sinatra::Base
     end
   end
 
+  get "/profile" do
+    if current_user
+      @user_songs = current_user.user_songs
+      erb :profile
+    else
+      redirect to("/login")
+    end
+  end
+
+  get "/suggest_song" do
+    if current_user
+      erb :addition2main, locals:{ results: nil}
+    else
+      "Please login to suggest a song"
+      erb :login
+    end
+  end
+
+  post "/suggest_song" do
+    if current_user
+      s = params[:suggested_song].to_s
+      m = Search.find_song_spotify s
+      erb :result_page, locals:{ results: m}
+    else
+      redirect to "/login"
+    end
+  end
+
+  post "/save_song" do
+    j = params[:result]
+    t = JSON.parse(j)
+    Song.create( title: t["title"], suggested_by: current_user, artist: t["artist"], spotify_preview_url: t["preview_url"], album_name: t["album_name"], album_image: t["album_image"])
+    erb :addition2main
+  end
 end
 
 Spotifyifyly.run!

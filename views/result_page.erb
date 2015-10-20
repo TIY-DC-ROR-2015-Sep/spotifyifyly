@@ -1,0 +1,22 @@
+<% erb :addition2main%>
+
+  <% if results %>
+  <h2> Did you mean </h2>
+  <ul>
+  <% results.each do |result|%>
+  <li>
+    <form action="/save_song" method="Post">
+      <div class = "song_to_save">
+        <input type="hidden" name="result" value= '<%=result.to_json %>'>
+     <%= result[:title] %> by <%= result[:artist] %> on <%= result[:album_name]%>
+      <div class = "box">
+      <button>
+        Save
+      </button>
+    </div>
+    </form>
+
+    </li>
+    <%end%>
+    </ul>
+  <%end%>
