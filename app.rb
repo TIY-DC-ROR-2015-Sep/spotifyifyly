@@ -9,6 +9,7 @@ class Spotifyifyly < Sinatra::Base
   enable :sessions
 
   set :logging, true
+  set :session_secret, "my_secret_key_thats_really_secret_i_*swear*"
 
   def current_user
     # If you're logged in, return logged in User
