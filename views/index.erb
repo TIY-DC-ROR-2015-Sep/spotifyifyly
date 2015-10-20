@@ -1,26 +1,100 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <link rel="stylesheet" href="app.css" />
-    <meta charset="UTF-8">
-    <title>Spotifyifyly</title>
-  </head>
-  <body TEXT="#FFFFC3" LINK="#00FFAE" VLINK="#00FFAE" ALINK="#FFFF00">
-    <audio src="/audio/Bonnie_Tyler_-_Total_Eclipse_of_the_Heart.mp3" preload="auto" autoplay="autoplay"></audio>
-    <img src="/images/spotifyifyly.gif">
-    <div class="Login">
-    <a href="/profile">My Profile</a>
-    </div>
-    <h1><marquee>This Week's Songs</marquee></h1>
+    <head>
+        <title>Spotifyifyly</title>
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <link rel="stylesheet" href="app.css">
+        <!-- set the character encoding for the page -->
+        <meta charset="utf-8">
+        <!-- set viewport for responsiveness -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
 
-    <div class = "Songs">
-    <% Song.all.each do |song| %>
-      <li>
-        <strong><%= song.title %></strong> by <%= song.artist %>, suggested by <%= song.suggested_by.name.capitalize %><br>
-          <%= song.genre %><a href = "song.spotify_preview_url"> Preview on Spotify</a><a href="vote"><img src="/images/vote.gif"></a>
-      </li>
+    <body>
+      <audio src="/audio/midi.mp3" preload="auto" autoplay="autoplay"></audio>
+      <div class="container-fluid">
+        <!-- Navbar added from w3c bootstrap tutorial -->
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container-fluid">
+            <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://spotify.com">Spotify</a>
+            </div>
+
+        <!-- Makes navbar collabsible, from w3c tutorial -->
+        <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+            <li class="active"><a href="/">Home</a></li>
+            <li><a href="/profile">Profile</a></li>
+            <li><a href="/playlists">Playlists</a></li>
+            <li><a href="/about">About</a></li>
+        </ul>
+        </div>
+        </div>
+        </nav>
+
+        <!-- this holds the header -->
+        <header class ="row">
+            <div class="col-md-12">
+                <br>
+                <br>
+                <br>
+            </div>
+        </header>
+
+        <!-- adds a line under the header -->
+        <div class="row">
+            <div class="col-md-12">
+            <img src="images/spotifyifyly.gif" class="img-rounded" alt="Spotifyifyly." width="419" height="67">
+            </div>
+            <h1><marquee>This Week's Songs</marquee></h1>
+            <div class = "Songs">
+                <% Song.all.each do |song| %>
+            <li>
+                <strong><%= song.title %></strong> by <%= song.artist %>, suggested by <%= song.suggested_by.name.capitalize %><br>
+                <%= song.genre %><a href = "song.spotify_preview_url"> Preview on Spotify</a><a href="vote"><img src="/images/vote.gif"></a>
+            </li>
+            <br>
+            <% end %>
+            </div>
+            </div>
+      </div>
+
       <br>
-    <% end %>
-    </div>
-  </body>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+
+
+        <!-- Contact section-->
+        <section class="row">
+            <div class="col-12">
+                <h3 class="footer-title">Contact Us</h3>
+                <p class="contact">email: <a href="mailto:info@spotifyifyly.com">info@spotifyifyly.com</a></p>
+            </div>
+        </section>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    </body>
 </html>

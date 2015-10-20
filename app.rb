@@ -57,7 +57,7 @@ class Spotifyifyly < Sinatra::Base
     end
   end
 
-  get "/suggest_song/" do
+  get "/suggest_song" do
     if current_user
       erb :addition2main, locals:{ results: nil}
     else
@@ -66,7 +66,7 @@ class Spotifyifyly < Sinatra::Base
     end
   end
 
-  post "/suggest_song/" do
+  post "/suggest_song" do
     if current_user
       s = params[:suggested_song].to_s
       m = Search.find_song_spotify s
