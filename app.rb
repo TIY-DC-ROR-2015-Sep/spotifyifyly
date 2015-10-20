@@ -22,7 +22,7 @@ class Spotifyifyly < Sinatra::Base
       erb :index
     else
       #"It works!"
-      erb :other_index
+      erb :homepage
     end
   end
 
