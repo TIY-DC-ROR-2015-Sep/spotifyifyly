@@ -14,7 +14,6 @@ class Spotifyifyly < Sinatra::Base
     # If not logged in, return nil
     logged_in_user_id = session[:logged_in_user_id]
     User.find_by_id(logged_in_user_id)
-    User.find(10)
   end
 
   get "/" do
