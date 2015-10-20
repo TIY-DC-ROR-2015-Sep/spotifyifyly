@@ -61,7 +61,7 @@ class Spotifyifyly < Sinatra::Base
       s = params[:suggested_song].to_s
       m = Search.find_song_spotify s
       t = m.first
-      Song.create( title: t[:title], suggested_by: current_user, artist: t[:artist], spotify_preview_url: t[:preview_url])
+      Song.create( title: t[:title], suggested_by: current_user, artist: t[:artist], spotify_preview_url: t[:preview_url], album_name: t[:album_name], album_image: t[:album_image])
       erb :addition2main, locals:{ results: t}
     else
       redirect to "/login"
