@@ -4,6 +4,7 @@ gem 'activerecord'
 gem 'pry'
 gem 'minitest'
 gem 'did_you_mean'
+gem 'httparty'
 
 group :development do
   gem 'sqlite3'
