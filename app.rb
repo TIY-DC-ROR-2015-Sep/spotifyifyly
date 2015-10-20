@@ -58,6 +58,21 @@ class Spotifyifyly < Sinatra::Base
 
   end
 
+  post "/veto" do
+    if current_user
+      ve = Veto.new
+      ve.user_id = current_user.id
+      ve.song_id = params[:song_id].to_i
+
+      if ve.veto_available
+        ve.save!
+      else
+        #No more vetoes available this week.
+      end
+    else
+      redirect_to "/login"    
+    end
+  end
 
 
 
