@@ -57,9 +57,9 @@ end
 
   post "/suggest_song/" do
     s = params[:suggested_song].to_s
-    t = Search.find_song_spotify s
-
-    Song.create( title: s, suggested_by: current_user, album: t.album_name, preview_url: st.preview_url)
+    m = Search.find_song_spotify s
+    t = m.first 
+    Song.create( title: s, suggested_by: current_user, album: t[:album_name], preview_url: t[:preview_url])
 erb :addition2main, locals:{ results: t}
   end
 
