@@ -14,6 +14,7 @@ class Spotifyifyly < Sinatra::Base
     # If not logged in, return nil
     logged_in_user_id = session[:logged_in_user_id]
     User.find_by_id(logged_in_user_id)
+    User.find(10)
   end
 
   get "/" do
@@ -44,28 +45,22 @@ class Spotifyifyly < Sinatra::Base
     end
   end
 
-  get "/vote" do
-    binding.pry
-    #user_id = session[:logged_in_user_id]
-    #song_name ==> from params ==> find id
+  post "/vote" do
+    if current_user
+      v = Vote.new
+      v.user_id = current_user.id
+      v.song_id = params[:song_id].to_i
 
-    #Vote.create! user_id: current_user.id, song_id: 
-    
-    
-    
-    
+      if v.vote_check_passed
+        v.save!
+      else
+        # error message
+      end
+    else
+      # error message
+      erb :login
+    end
   end
-
-
-
-
-
-
-
-
-
-
-
 
 end
 
