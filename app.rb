@@ -68,10 +68,9 @@ class Spotifyifyly < Sinatra::Base
 
 
 post "/save_song" do
-  binding.pry
   j = params[:result]
   t = JSON.parse(j)
-  Song.create( title: t[:title], suggested_by: current_user, artist: t[:artist], spotify_preview_url: t[:preview_url], album_name: t[:album_name], album_image: t[:album_image])
+  Song.create( title: t["title"], suggested_by: current_user, artist: t["artist"], spotify_preview_url: t["preview_url"], album_name: t["album_name"], album_image: t["album_image"])
   erb :addition2main
 end
 
