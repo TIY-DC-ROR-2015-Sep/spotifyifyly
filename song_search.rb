@@ -9,20 +9,21 @@ class Search
     key = File.read "./api.txt"
     r = HTTParty.get "https://api.spotify.com/v1/search?q=#{s}&type=track",
     headers:{"Authorization" => "Bearer #{key}"}
+
     r["tracks"]["items"].first(5).each do |song|
-binding.pry
-  song_dets= []
-  finds ={
-      :title => song["name"]
-      :album_name =>  song["album"]["name"]
-      :album_image => song["album"]["images"][1]["uri"]
-      :artist => song["artists"][0]["name"]
+
+  @song_dets = []
+  finds = {
+      :title => song["name"],
+      :album_name =>  song["album"]["name"],
+      :album_image => song["album"]["images"][1]["uri"],
+      :artist => song["artists"][0]["name"],
       :preview_url => song["preview_url"]
     }
-    song_dets.push(finds)
-  binding.pry
+    @song_dets.push(finds)
+
     end
-    song_dets
+    @song_dets
   end
 
 end

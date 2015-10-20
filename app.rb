@@ -3,7 +3,7 @@ require 'pry'
 
 require './db/setup'
 require './lib/all'
-
+require './song_search.rb'
 
 class Spotifyifyly < Sinatra::Base
   enable :sessions
@@ -58,9 +58,9 @@ end
   post "/suggest_song/" do
     s = params[:suggested_song].to_s
     t = Search.find_song_spotify s
-    erb :addition2main, locals:{ results:t}
-    Song.create( title: s, suggested_by: current_user, album: t.album_name, preview_url: st.preview_url)
 
+    Song.create( title: s, suggested_by: current_user, album: t.album_name, preview_url: st.preview_url)
+erb :addition2main, locals:{ results: t}
   end
 
 
