@@ -1,0 +1,14 @@
+<%= erb :addition2main%>
+<div class="Suggested song">
+  <%= suggested_song[:suggested_song] if suggested_song %>
+</div>
+
+  <%= if results %>
+  <ul>
+  <% results.each do |result|%>
+  <li>  <%= result[:name] %> by <%= result[:artist] %> on <%= result[:album]%>
+      <%end%>
+    </li>
+
+    </ul>
+  <%end%>
