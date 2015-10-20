@@ -48,6 +48,23 @@ class Spotifyifyly < Sinatra::Base
     end
   end
 
+  post "/vote" do
+    if current_user
+      v = Vote.new
+      v.user_id = current_user.id
+      v.song_id = params[:song_id].to_i
+
+      if v.vote_check_passed
+        v.save!
+      else
+        # error message
+      end
+    else
+      # error message
+      erb :login
+    end
+  end
+
   get "/profile" do
     if current_user
       @user_songs = current_user.user_songs
@@ -81,14 +98,6 @@ class Spotifyifyly < Sinatra::Base
     t = JSON.parse(j)
     Song.create( title: t["title"], suggested_by: current_user, artist: t["artist"], spotify_preview_url: t["preview_url"], album_name: t["album_name"], album_image: t["album_image"])
     erb :addition2main
-  end
-
-  get "/vote" do
-    binding.pry
-    #user_id = session[:logged_in_user_id]
-    #song_name ==> from params ==> find id
-
-    #Vote.create! user_id: current_user.id, song_id:
   end
 end
 
