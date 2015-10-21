@@ -19,13 +19,7 @@ class Spotifyifyly < Sinatra::Base
   end
 
   get "/" do
-    if current_user
-      #"You are #{current_user.email}"
-      erb :index
-    else
-      #"It works!"
-      erb :index
-    end
+    erb :index
   end
 
   get "/login" do
@@ -77,11 +71,10 @@ class Spotifyifyly < Sinatra::Base
       else
         #No more vetoes available this week.
       end
-      redirect to("/")
     else
       #Please login to use your veto.
-      redirect to("/")
     end
+    redirect to("/")
   end
 
   get "/profile" do

@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :email
 
   def songs_vetoed
-    vetoes = Vetoes.where( user_id: id )
+    vetoes = Veto.where( user_id: id )
     vetoes.map { |v| v.song }
   end
 
