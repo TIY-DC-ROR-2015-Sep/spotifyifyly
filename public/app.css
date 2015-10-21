@@ -27,29 +27,45 @@ input {
   background: #eef66c;
 }
 
+.navbar {
+  height: 1%;
+}
 .navbar-inverse {
   background-color: #0b0b67;
   border-color: #080808;
 }
 
 .navbar-inverse .navbar-brand {
-    color: #1ed760;
+  color: #1ed760;
 }
 
 .navbar-inverse .navbar-nav>li>a {
   color: #1ed760;
+  background-color: #0b0b67;
 }
 
 .login-banner {
   color: #E70000;
 }
 
+.logout-btn {
+  color: #1ed760;
+  background: #e30000;
+  padding-top: 12px;
+
+}
+
 .index-header {
-  padding-top: 4%;
+  padding-top: 50px;
+}
+
+.textbox {
+  padding-top: 10px;
+  display: inline;
 }
 
 .header {
-  padding-top: 2%;
+  padding-top: 40px;
 }
 
 .Songs {
@@ -77,7 +93,7 @@ input {
 }
 
 .footer-title {
-  padding-top: 10%;
+  padding-top: 50px;
   color: #1ed760;
 }
 
