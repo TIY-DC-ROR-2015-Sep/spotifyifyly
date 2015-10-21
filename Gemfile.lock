@@ -19,6 +19,7 @@ GEM
     coderay (1.1.0)
     did_you_mean (0.10.0)
       interception
+    gravatarify (3.1.1)
     httparty (0.13.7)
       json (~> 1.8)
       multi_xml (>= 0.5.2)
@@ -53,6 +54,7 @@ PLATFORMS
 DEPENDENCIES
   activerecord
   did_you_mean
+  gravatarify
   httparty
   minitest
   pg

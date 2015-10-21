@@ -4,8 +4,10 @@ require 'pry'
 require './db/setup'
 require './lib/all'
 require './song_search.rb'
+require 'gravatarify'
 
 class Spotifyifyly < Sinatra::Base
+  helpers Gravatarify::Helper
   enable :sessions
   enable :method_override
 
