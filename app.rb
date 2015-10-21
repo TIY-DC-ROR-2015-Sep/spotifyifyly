@@ -77,7 +77,7 @@ class Spotifyifyly < Sinatra::Base
 
   get "/suggest_song" do
     if current_user
-      erb :addition2main, locals:{ results: nil}
+      erb :index, locals:{ results: nil}
     else
       "Please login to suggest a song"
       erb :login
@@ -98,7 +98,7 @@ class Spotifyifyly < Sinatra::Base
     j = params[:result]
     t = JSON.parse(j)
     Song.create( title: t["title"], suggested_by: current_user, artist: t["artist"], spotify_preview_url: t["preview_url"], album_name: t["album_name"], album_image: t["album_image"])
-    erb :addition2main
+    redirect to ("/")
   end
 end
 
