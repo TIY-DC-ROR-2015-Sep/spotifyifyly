@@ -67,49 +67,41 @@ class Spotifyifyly < Sinatra::Base
 
   post "/vote" do
     login_required!
-    # if current_user
-      v = Vote.new
-      v.user_id = current_user.id
-      v.song_id = params[:song_id].to_i
+    v = Vote.new
+    v.user_id = current_user.id
+    v.song_id = params[:song_id].to_i
 
-      if v.vote_check_passed
-        v.save!
-      else
-        # error message
-      end
-      redirect to("/")
-    # else
-    #   set_message "Please login to view this page"
-    #   erb :login
-    # end
-  end
-
-  post "/veto" do
-    if current_user
-      ve = Veto.new
-      ve.user_id = current_user.id
-      ve.song_id = params[:song_id].to_i
-
-      if ve.veto_available && ve.save
-        set_message "Your veto has been recorded"
-      else
-        set_message "No more vetos available this week"
-      end
+    if v.vote_check_passed
+      v.save!
     else
-      set_message "Please login to view this page"
+      # error message
     end
     redirect to("/")
   end
 
-  get "/profile" do
-    if current_user
-      @user_songs = current_user.user_songs
-      erb :profile
+  post "/veto" do
+    login_required!
+
+    ve = Veto.new
+    ve.user_id = current_user.id
+    ve.song_id = params[:song_id].to_i
+
+    if ve.veto_available && ve.save
+      set_message "Your veto has been recorded"
     else
-      redirect to("/login")
+      set_message "No more vetos available this week"
     end
+
+    redirect to("/")
   end
 
+  get "/profile" do
+    login_required!
+    @user_songs = current_user.user_songs
+    erb :profile
+  end
+
+  # TODO: remove this?
   get "/suggest_song" do
     if current_user
       erb :addition2main, locals:{ results: nil}
@@ -120,16 +112,14 @@ class Spotifyifyly < Sinatra::Base
   end
 
   post "/suggest_song" do
-    if current_user
-      s = params[:suggested_song].to_s
-      m = Search.find_song_spotify s
-      erb :result_page, locals:{ results: m}
-    else
-      redirect to "/login"
-    end
+    login_required!
+    s = params[:suggested_song].to_s
+    m = Search.find_song_spotify s
+    erb :result_page, locals:{ results: m}
   end
 
   post "/save_song" do
+    login_required!
     j = params[:result]
     t = JSON.parse(j)
     Song.create( title: t["title"], suggested_by: current_user, artist: t["artist"], spotify_preview_url: t["preview_url"], album_name: t["album_name"], album_image: t["album_image"])
