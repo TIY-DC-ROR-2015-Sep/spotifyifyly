@@ -72,6 +72,10 @@
                     <input type="hidden" name="song_id" value="<%= song.id %>">
                     <button><img src="/images/vote.gif"></button>
                 </form>
+                <form action="/veto" method="POST">
+                    <input type="hidden" name="song_id" value="<%= song.id %>">
+                    <button>Veto</button>
+                </form>
             </li>
             <br>
             <% end %>
