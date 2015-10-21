@@ -10,9 +10,9 @@
         <label class="control-label">Name</label>
         <p class="form-control-static"><%= "#{current_user.name}" %></p>
         <% if admin_user %>
-            <a href="/invite">
+            <button><a href="/invite">
                 Invite New User
-            </a>
+            </a></button>
         <% end %>
 
       </div>
