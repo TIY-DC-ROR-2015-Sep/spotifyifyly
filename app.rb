@@ -18,14 +18,18 @@ class Spotifyifyly < Sinatra::Base
     User.find_by_id(logged_in_user_id)
   end
 
+  def set_message text
+    session[:message] = text
+  end
+
+  def read_and_reset_message
+    #val = session[:message]
+    session.delete :message
+    #return val
+  end
+
   get "/" do
-    if current_user
-      #"You are #{current_user.email}"
-      erb :index
-    else
-      #"It works!"
-      erb :homepage
-    end
+    erb :index
   end
 
   get "/login" do
@@ -48,6 +52,41 @@ class Spotifyifyly < Sinatra::Base
     end
   end
 
+  post "/vote" do
+    if current_user
+      v = Vote.new
+      v.user_id = current_user.id
+      v.song_id = params[:song_id].to_i
+
+      if v.vote_check_passed
+        v.save!
+      else
+        # error message
+      end
+      redirect to("/")
+    else
+      # error message
+      erb :login
+    end
+  end
+
+  post "/veto" do
+    if current_user
+      ve = Veto.new
+      ve.user_id = current_user.id
+      ve.song_id = params[:song_id].to_i
+
+      if ve.veto_available && ve.save
+        set_message "Your veto has been recorded"
+      else
+        set_message "No more vetos available this week"
+      end
+    else
+      set_message "Please login to view this page"
+    end
+    redirect to("/")
+  end
+
   get "/profile" do
     if current_user
       @user_songs = current_user.user_songs
@@ -57,7 +96,7 @@ class Spotifyifyly < Sinatra::Base
     end
   end
 
-  get "/suggest_song/" do
+  get "/suggest_song" do
     if current_user
       erb :addition2main, locals:{ results: nil}
     else
@@ -66,24 +105,21 @@ class Spotifyifyly < Sinatra::Base
     end
   end
 
-  post "/suggest_song/" do
+  post "/suggest_song" do
     if current_user
       s = params[:suggested_song].to_s
       m = Search.find_song_spotify s
-      t = m.first
-      Song.create( title: t[:title], suggested_by: current_user, artist: t[:artist], spotify_preview_url: t[:preview_url])
-      erb :addition2main, locals:{ results: t}
+      erb :result_page, locals:{ results: m}
     else
       redirect to "/login"
     end
   end
 
-  get "/vote" do
-    binding.pry
-    #user_id = session[:logged_in_user_id]
-    #song_name ==> from params ==> find id
-
-    #Vote.create! user_id: current_user.id, song_id:
+  post "/save_song" do
+    j = params[:result]
+    t = JSON.parse(j)
+    Song.create( title: t["title"], suggested_by: current_user, artist: t["artist"], spotify_preview_url: t["preview_url"], album_name: t["album_name"], album_image: t["album_image"])
+    redirect to("/")
   end
 end
 
