@@ -10,7 +10,7 @@ class Spotifyifyly < Sinatra::Base
   enable :method_override
 
   set :logging, true
-  set :session_secret, "my_secret_key_thats_really_secret_i_*swear*"
+  set :session_secret, (ENV["SESSION_SECRET"] || "this_isnt_really_secret_but_its_only_for_development_so_thats_okay")
 
   if ENV["PORT"]
     set :port, ENV["PORT"]
