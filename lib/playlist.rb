@@ -18,7 +18,9 @@ class Playlist < ActiveRecord::Base
 
     Playlist.all.each do |pl|
       next if pl == top_playlist
-      list = pl.songs.sort_by { |s| s.votes.count }
+      big_list = pl.songs.sort_by { |s| s.votes.count }
+      list = big_list.reject { |s| s.vetoed? }
+
       if list.any?
         PlaylistSong.create( playlist_id: top_playlist.id, song_id: list.first.id )
       end
