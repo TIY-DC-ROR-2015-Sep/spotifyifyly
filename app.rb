@@ -24,8 +24,8 @@ class Spotifyifyly < Sinatra::Base
   end
 
   def admin_user
-    logged_in_user_id = session[:logged_in_user_id]
-    User.find_by_id(logged_in_user_id).admin?
+    current_user_id = session[:logged_in_user_id]
+    User.find_by_id(current_user_id).admin?
   end
 
   def set_message text
