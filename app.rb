@@ -7,6 +7,7 @@ require './song_search.rb'
 
 class Spotifyifyly < Sinatra::Base
   enable :sessions
+  enable :method_override
 
   set :logging, true
   set :session_secret, "my_secret_key_thats_really_secret_i_*swear*"
@@ -59,7 +60,7 @@ class Spotifyifyly < Sinatra::Base
     end
   end
 
-  post "/logout" do
+  delete "/logout" do
     session.delete :logged_in_user_id
     set_message "You are now logged out"
     redirect to("/")
