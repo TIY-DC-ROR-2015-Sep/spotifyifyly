@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  validates_presence_of :email, :password
+  validates_presence_of :name, :email, :password
   validates_uniqueness_of :email
 
   def songs_vetoed

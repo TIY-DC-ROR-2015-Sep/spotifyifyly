@@ -1,72 +1,23 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Spotifyifyly</title>
-        <!-- Bootstrap -->
-        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-        <link rel="stylesheet" href="app.css">
-        <!-- set the character encoding for the page -->
-        <meta charset="utf-8">
-        <!-- set viewport for responsiveness -->
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-    </head>
+<div class="login-page">
+    <div class="col-md-12">
+        <h2 class="login-banner">
+            Please login with your username and password!
+        </h2>
+        <img src="images/jnco.jpg" class="jnco" alt="awesome 90s bro" width="600" height="460">
+       <% if @error %>
+         <p><%= @error %></p>
+       <% end %>
 
-    <body>
-      <audio src="/audio/midi.mp3" preload="auto" autoplay="autoplay"></audio>
-      <div class="container-fluid">
-
-        <!-- this holds the header -->
-        <header class="index-header">
-            <div class="col-md-12">
-     <!-- Navbar added from w3c bootstrap tutorial -->
-            <nav class="navbar navbar-inverse navbar-fixed-top">
-                <div class="container-fluid">
-                <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="/">Spotifyifyly</a>
-                </div>
-
-            <!-- Makes navbar collabsible, from w3c tutorial -->
-            <div class="collapse navbar-collapse" id="myNavbar">
-            <ul class="nav navbar-nav">
-                <li><a href="/profile">Profile</a></li>
-                <li><a href="/playlists">Playlists</a></li>
-                <li><a href="/about">About</a></li>
-                <li class="login"><a href="/login">Login</a></li>
-            </ul>
-            </div>
-            </div>
-            </nav>
-            </div>
-        </header>
-
-        <div class="login-page">
-            <div class="col-md-12">
-                <h2 class="login-banner">
-                    Please login with your username and password!
-                </h2>
-                <img src="images/jnco.jpg" class="jnco" alt="awesome 90s bro" width="600" height="460">
-               <% if @error %>
-                 <p><%= @error %></p>
-               <% end %>
-
-               <form method="post" action="/handle_login">
-                 <label>
-                   Email
-                   <input type="text" name="email">
-                 </label>
-                 <label>
-                   Password
-                   <input type="password" name="password">
-                 </label>
-                 <button>Login</button>
-               </form>
-            </div>
-        </div>
-    </body>
- </html>
+       <form method="post" action="/handle_login">
+         <label>
+           Email
+           <input type="text" name="email">
+         </label>
+         <label>
+           Password
+           <input type="password" name="password">
+         </label>
+         <button>Login</button>
+       </form>
+    </div>
+</div>
