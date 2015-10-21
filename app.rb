@@ -28,6 +28,13 @@ class Spotifyifyly < Sinatra::Base
     #return val
   end
 
+  def login_required!
+    unless current_user
+      set_message "You must login to view this page"
+      redirect to("/login")
+    end
+  end
+
   get "/" do
     erb :index
   end
@@ -52,8 +59,15 @@ class Spotifyifyly < Sinatra::Base
     end
   end
 
+  post "/logout" do
+    session.delete :logged_in_user_id
+    set_message "You are now logged out"
+    redirect to("/")
+  end
+
   post "/vote" do
-    if current_user
+    login_required!
+    # if current_user
       v = Vote.new
       v.user_id = current_user.id
       v.song_id = params[:song_id].to_i
@@ -64,10 +78,10 @@ class Spotifyifyly < Sinatra::Base
         # error message
       end
       redirect to("/")
-    else
-      # error message
-      erb :login
-    end
+    # else
+    #   set_message "Please login to view this page"
+    #   erb :login
+    # end
   end
 
   post "/veto" do
