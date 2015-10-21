@@ -83,6 +83,25 @@ class Spotifyifyly < Sinatra::Base
     redirect to("/")
   end
 
+  post "/invite" do
+    admin_required!
+    u = User.new
+    u.name = params[:name]
+    u.email = params[:email]
+    u.password = params[:password]
+    if u.save
+      set_message "User has been created"
+    else
+      set_message "Email is already in use"
+    end
+    redirect to("/invite")
+  end
+
+  get "/invite" do
+    admin_required!
+    erb :invite
+  end
+
   post "/vote" do
     login_required!
     v = Vote.new
