@@ -102,15 +102,6 @@ class Spotifyifyly < Sinatra::Base
     erb :profile
   end
 
-  # TODO: remove this?
-  get "/suggest_song" do
-    if current_user
-      erb :index, locals:{ results: nil}
-    else
-      "Please login to suggest a song"
-      erb :login
-    end
-  end
 
   post "/suggest_song" do
     login_required!
