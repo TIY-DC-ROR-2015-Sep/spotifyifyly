@@ -23,6 +23,11 @@ class Spotifyifyly < Sinatra::Base
     User.find_by_id(logged_in_user_id)
   end
 
+  def admin_user
+    admin_user_id = session[:admin_user_id]
+    User.find_by_id(admin_user_id).admin?
+  end
+
   def set_message text
     session[:message] = text
   end
@@ -36,6 +41,14 @@ class Spotifyifyly < Sinatra::Base
   def login_required!
     unless current_user
       set_message "You must login to view this page"
+      redirect to("/login")
+    end
+  end
+
+  def admin_required!
+    login_required!
+    unless admin_user
+      set_message "Only administrators may invite new members"
       redirect to("/login")
     end
   end
