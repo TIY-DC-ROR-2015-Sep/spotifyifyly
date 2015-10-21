@@ -9,4 +9,5 @@ class Veto < ActiveRecord::Base
     #Veto availability determined by Time?
     true
   end
+
 end

@@ -24,7 +24,7 @@ class Spotifyifyly < Sinatra::Base
       erb :index
     else
       #"It works!"
-      erb :homepage
+      erb :index
     end
   end
 
@@ -66,7 +66,6 @@ class Spotifyifyly < Sinatra::Base
     end
   end
 
-
   post "/veto" do
     if current_user
       ve = Veto.new
@@ -78,9 +77,12 @@ class Spotifyifyly < Sinatra::Base
       else
         #No more vetoes available this week.
       end
+      redirect to("/")
     else
-      redirect_to "/login"
+      #Please login to use your veto.
+      redirect to("/")
     end
+  end
 
   get "/profile" do
     if current_user

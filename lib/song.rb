@@ -4,8 +4,8 @@ class Song < ActiveRecord::Base
   belongs_to :suggested_by, class_name: "User"
 
   def vetoed
-    #Within the same week
-    
+    Veto.all.include?(:song_id)
+    #Within this week.
   end
 
 end
