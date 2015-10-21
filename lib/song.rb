@@ -3,4 +3,9 @@ class Song < ActiveRecord::Base
 
   belongs_to :suggested_by, class_name: "User"
 
+  def vetoed?
+    # TODO: Within this week.
+    Veto.where(song_id: self.id).count > 0
+  end
+
 end
