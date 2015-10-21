@@ -19,6 +19,14 @@ li {
   color: #ff8300;
 }
 
+label {
+  color: #b378d3;
+}
+
+input {
+  background: #eef66c;
+}
+
 .navbar-inverse {
   background-color: #0b0b67;
   border-color: #080808;
@@ -32,9 +40,16 @@ li {
   color: #1ed760;
 }
 
-.navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:focus, .navbar-inverse .navbar-nav>.active>a:hover {
-  color: #1ed760;
-  background-color: #0b0b67;
+.login-banner {
+  color: #E70000;
+}
+
+.index-header {
+  padding-top: 4%;
+}
+
+.header {
+  padding-top: 2%;
 }
 
 .Songs {
@@ -62,6 +77,7 @@ li {
 }
 
 .footer-title {
+  padding-top: 10%;
   color: #1ed760;
 }
 
@@ -73,3 +89,6 @@ marquee {
   color: #eef66c;
 }
 
+.jnco {
+  padding: 10px 0 20px 0;
+}
