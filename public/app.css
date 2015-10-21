@@ -101,12 +101,23 @@ input {
   color: #E70000;
 }
 
+.logout-btn {
+  color: #1ed760;
+  background-color: #0b0b67;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.textbox {
+    display: inline;
+}
+
 .index-header {
-  padding-top: 4%;
+  padding-top: 55px;
 }
 
 .header {
-  padding-top: 2%;
+  padding-top: 10px;
 }
 
 .Songs {
@@ -134,7 +145,7 @@ input {
 }
 
 .footer-title {
-  padding-top: 10%;
+  padding-top: 100px;
   color: #1ed760;
 }
 

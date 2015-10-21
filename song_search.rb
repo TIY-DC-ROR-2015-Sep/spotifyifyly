@@ -6,7 +6,7 @@ class Search
   def self.find_song_spotify song
 
     s = song.gsub(/\s/,'+').gsub(/'/,"%27")
-    key = File.read "./api.txt"
+    key = ENV["SPOTIFY_KEY"] || File.read("./api.txt")
     r = HTTParty.get "https://api.spotify.com/v1/search?q=#{s}&type=track",
     headers:{"Authorization" => "Bearer #{key}"}
     song_dets = []
