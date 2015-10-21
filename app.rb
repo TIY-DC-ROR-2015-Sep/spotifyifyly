@@ -127,9 +127,16 @@ class Spotifyifyly < Sinatra::Base
     login_required!
     j = params[:result]
     t = JSON.parse(j)
-    Song.create( title: t["title"], suggested_by: current_user, artist: t["artist"], spotify_preview_url: t["preview_url"], album_name: t["album_name"], album_image: t["album_image"])
+    s = Song.create( title: t["title"], suggested_by: current_user, artist: t["artist"], spotify_preview_url: t["preview_url"], album_name: t["album_name"], album_image: t["album_image"])
+
+    if Playlist.add song
+      set_message "Your song was added to the playlist!"
+    else
+      set_message "Your song is already on a playlist!"
+    end
     redirect to("/")
   end
+
 end
 
 Spotifyifyly.run!

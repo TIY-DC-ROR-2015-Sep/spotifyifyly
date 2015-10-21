@@ -1,6 +1,7 @@
 class Song < ActiveRecord::Base
   validates_presence_of :title, :suggested_by
 
+  has_many :votes
   belongs_to :suggested_by, class_name: "User"
 
   def vetoed?
