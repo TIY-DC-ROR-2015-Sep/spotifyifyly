@@ -1,69 +1,30 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Spotifyifyly - Account Overview</title>
-        <!-- Bootstrap -->
-        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-        <link rel="stylesheet" href="app.css">
-        <!-- set the character encoding for the page -->
-        <meta charset="utf-8">
-        <!-- set viewport for responsiveness -->
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-    </head>
+<h1 class="account">Account Overview</h1>
 
-    <body>
-      <audio src="/audio/midi.mp3" preload="auto" autoplay="autoplay"></audio>
-      <div class="container-fluid">
-        <!-- Navbar added from w3c bootstrap tutorial -->
-        <nav class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container-fluid">
-            <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="https://spotify.com">Spotify</a>
-            </div>
+<div class="col-md-12">
+<div class="profile">
+    <h3 class="text-primary">Profile</h3>
+    <form role="form">
+      <div class="form-group">
+        <label class="control-label">Email</label>
+        <p class="form-control-static"><%= "#{current_user.email}" %></p>
+        <label class="control-label">Name</label>
+        <p class="form-control-static"><%= "#{current_user.name}" %></p>
+        <% if admin_user %>
+            <button><a href="/invite">
+                Invite New User
+            </a></button>
+        <% end %>
 
-        <!-- Makes navbar collabsible, from w3c tutorial -->
-        <div class="collapse navbar-collapse" id="myNavbar">
-        <ul class="nav navbar-nav">
-            <li class="active"><a href="/">Home</a></li>
-            <li><a href="/profile">Profile</a></li>
-            <li><a href="/playlists">Playlists</a></li>
-            <li><a href="/about">About</a></li>
-        </ul>
-        </div>
-        </div>
-        </nav>
-
-        <br>
-        <br>
-
-        <div class="header">
-            <h1 class="account">Account Overview</h1>
-        </div>
-
-        <div class="col-md-12">
-        <div class="profile">
-            <h3 class="text-primary">Profile</h3>
-            <form role="form">
-              <div class="form-group">
-                <label class="control-label">Email</label>
-                <p class="form-control-static"><%= "#{current_user.email}" %></p>
-                <label class="control-label">Name</label>
-                <p class="form-control-static"><%= "#{current_user.name}" %></p>
-              </div>
-          </div>
-          <div class="col-md-12">
-              <h2 class=songs>User Songs</h2>
-              <ul>
-                <% @user_songs.each do |song| %>
-                  <li>
-                      <strong><%= song.artist %></strong>: <%= song.title %>
-                  </li>
-                <% end %>
-              </ul>
-          </div>
-        </div>
+      </div>
+  </div>
+  <div class="col-md-12">
+      <h2 class=songs>User Songs</h2>
+      <ul>
+        <% @user_songs.each do |song| %>
+          <li>
+              <strong><%= song.artist %></strong>: <%= song.title %>
+          </li>
+        <% end %>
+      </ul>
+  </div>
+</div>

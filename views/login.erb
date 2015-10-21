@@ -1,15 +1,23 @@
-<% if @error %>
-  <p><%= @error %></p>
-<% end %>
+<div class="login-page">
+    <div class="col-md-12">
+        <h2 class="login-banner">
+            Please login with your username and password!
+        </h2>
+        <img src="images/jnco.jpg" class="jnco" alt="awesome 90s bro" width="600" height="460">
+       <% if @error %>
+         <p><%= @error %></p>
+       <% end %>
 
-<form method="post" action="/handle_login">
-  <label>
-    Email
-    <input type="text" name="email">
-  </label>
-  <label>
-    Password
-    <input type="password" name="password">
-  </label>
-  <button>Login</button>
-</form>
+       <form method="post" action="/handle_login">
+         <label>
+           Email
+           <input type="text" name="email">
+         </label>
+         <label>
+           Password
+           <input type="password" name="password">
+         </label>
+         <button>Login</button>
+       </form>
+    </div>
+</div>

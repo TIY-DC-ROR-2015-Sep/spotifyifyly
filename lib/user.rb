@@ -1,10 +1,17 @@
 class User < ActiveRecord::Base
-  validates_presence_of :email, :password
+  validates_presence_of :name, :email, :password
   validates_uniqueness_of :email
+
+  has_many :songs
+
+  def songs_vetoed
+    vetoes = Veto.where( user_id: id )
+    vetoes.map { |v| v.song }
+  end
 
   def songs_voted_for
     votes = Vote.where( user_id: id )
-    votes.map { |v| v.song } 
+    votes.map { |v| v.song }
   end
 
   def user_songs

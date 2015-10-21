@@ -19,6 +19,14 @@ li {
   color: #ff8300;
 }
 
+label {
+  color: #b378d3;
+}
+
+input {
+  background: #eef66c;
+}
+
 .navbar-inverse {
   background-color: #0b0b67;
   border-color: #080808;
@@ -32,9 +40,27 @@ li {
   color: #1ed760;
 }
 
-.navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:focus, .navbar-inverse .navbar-nav>.active>a:hover {
+.login-banner {
+  color: #E70000;
+}
+
+.logout-btn {
   color: #1ed760;
   background-color: #0b0b67;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.textbox {
+    display: inline;
+}
+
+.index-header {
+  padding-top: 55px;
+}
+
+.header {
+  padding-top: 10px;
 }
 
 .Songs {
@@ -62,6 +88,7 @@ li {
 }
 
 .footer-title {
+  padding-top: 100px;
   color: #1ed760;
 }
 
@@ -73,3 +100,6 @@ marquee {
   color: #eef66c;
 }
 
+.jnco {
+  padding: 10px 0 20px 0;
+}

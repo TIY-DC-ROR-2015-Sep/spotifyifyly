@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Spotifyifyly</title>
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <link rel="stylesheet" href="app.css">
+        <!-- set the character encoding for the page -->
+        <meta charset="utf-8">
+        <!-- set viewport for responsiveness -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+
+    <body>
+      <div class="container-fluid">
+
+        <!-- this holds the header -->
+        <header class="index-header">
+            <div class="col-md-12">
+     <!-- Navbar added from w3c bootstrap tutorial -->
+            <nav class="navbar navbar-inverse navbar-fixed-top">
+                <div class="container-fluid">
+                <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">Spotifyifyly</a>
+                </div>
+
+            <!-- Makes navbar collabsible, from w3c tutorial -->
+            <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li><a href="/profile">Profile</a></li>
+                <li><a href="/playlists">Playlists</a></li>
+                <li><a href="/about">About</a></li>
+                <% if current_user %>
+                  <li><a href="/profile"><%= current_user.name %></a></li>
+                  <li>
+                    <form action="/logout" method="POST">
+                      <input type="hidden" name="_method" value="DELETE">
+                      <button class="logout-btn">Logout</button>
+                    </form>
+                  </li>
+                <% else %>
+                  <div class="login-menu">
+                   <form action="/handle_login" method="post">
+                     <fieldset class='textbox'>
+                       <input style="margin-top: 8px" name="email" type="text" placeholder="Username" />
+                       <input style="margin-top: 8px" name="password" type="password" placeholder="Passsword" />
+                       <input class="btn-primary" name="commit" type="submit" value="Log In" />
+                     </fieldset>
+                   </form>
+                <% end %>
+            </ul>
+            </div>
+            </div>
+            </nav>
+            </div>
+        </header>
+
+        <%= yield %>
+
+        <% if m = read_and_reset_message %>
+          <!-- <marquee class="flash">
+            <%= m %>
+          </marquee> -->
+          <script type="text/javascript">
+            alert("<%= m %>")
+          </script>
+        <% end %>
+
+        <!-- Contact section-->
+        <section class="row">
+            <div class="col-12">
+                <h3 class="footer-title">Contact Us</h3>
+                <p class="contact">email: <a href="mailto:info@spotifyifyly.com">info@spotifyifyly.com</a></p>
+            </div>
+        </section>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    </body>
+</html>
