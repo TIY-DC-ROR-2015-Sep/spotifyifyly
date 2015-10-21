@@ -34,5 +34,5 @@ songs = [{
   ]
 
 songs.each do |song|
-  Song.create! title: song[:title], artist: song[:artist], suggested_by: User.all.sample
+  s = Song.create! title: song[:title], artist: song[:artist], suggested_by: User.all.sample
 end
