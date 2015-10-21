@@ -5,12 +5,9 @@ class Vote < ActiveRecord::Base
   belongs_to :song
 
   def vote_check_passed
-     # any?.. all?
-    user.songs_voted_for.each do |s|
-      if s.title[0] == song.title[0]
-        return false
-      end
+    if user.votes.count < 10
+      return true
     end
-    return true
+    return false
   end
 end
