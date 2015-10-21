@@ -44,6 +44,17 @@ input {
   color: #E70000;
 }
 
+.logout-btn {
+  color: #1ed760;
+  background-color: #0b0b67;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.textbox {
+    display: inline;
+}
+
 .index-header {
   padding-top: 55px;
 }
