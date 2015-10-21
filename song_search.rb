@@ -14,7 +14,7 @@ class Search
       finds = {
           :title => song["name"],
           :album_name =>  song["album"]["name"],
-          :album_image => song["album"]["images"][2],
+          :album_image => song["album"]["images"],
           :artist => song["artists"][0]["name"],
           :preview_url => song["preview_url"]
       }
