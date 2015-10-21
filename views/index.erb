@@ -20,7 +20,7 @@
     <br>
 
     <div class="Songs">
-        <% Song.all.each do |song| %>
+        <% Playlist.find_by_name("top_playlist").all.each do |song| %>
     <li>
         <strong><%= song.title %></strong> by <%= song.artist %>, suggested by <%= song.suggested_by.name.capitalize %><br>
         <%= song.genre %><a href="song.spotify_preview_url"> Preview on Spotify</a>
