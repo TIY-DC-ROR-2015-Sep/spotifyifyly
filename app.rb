@@ -18,6 +18,16 @@ class Spotifyifyly < Sinatra::Base
     User.find_by_id(logged_in_user_id)
   end
 
+  def set_message text
+    session[:message] = text
+  end
+
+  def read_and_reset_message
+    #val = session[:message]
+    session.delete :message
+    #return val
+  end
+
   get "/" do
     erb :index
   end
@@ -66,13 +76,13 @@ class Spotifyifyly < Sinatra::Base
       ve.user_id = current_user.id
       ve.song_id = params[:song_id].to_i
 
-      if ve.veto_available
-        ve.save!
+      if ve.veto_available && ve.save
+        set_message "Your veto has been recorded"
       else
-        #No more vetoes available this week.
+        set_message "No more vetos available this week"
       end
     else
-      #Please login to use your veto.
+      set_message "Please login to view this page"
     end
     redirect to("/")
   end
@@ -109,7 +119,7 @@ class Spotifyifyly < Sinatra::Base
     j = params[:result]
     t = JSON.parse(j)
     Song.create( title: t["title"], suggested_by: current_user, artist: t["artist"], spotify_preview_url: t["preview_url"], album_name: t["album_name"], album_image: t["album_image"])
-    erb :addition2main
+    redirect to("/")
   end
 end
 

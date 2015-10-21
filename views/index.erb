@@ -50,6 +50,16 @@
             <div class="col-md-12">
                 <img src="images/spotifyifyly.gif" class="link" alt="Spotifyifyly." width="419" height="67">
             </div>
+
+            <% if m = read_and_reset_message %>
+              <!-- <marquee class="flash">
+                <%= m %>
+              </marquee> -->
+              <script type="text/javascript">
+                alert("<%= m %>")
+              </script>
+            <% end %>
+
             <h1><marquee>This Week's Songs</marquee></h1>
             <form action="/suggest_song" method="POST">
               <div class="box">
