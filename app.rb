@@ -12,6 +12,10 @@ class Spotifyifyly < Sinatra::Base
   set :logging, true
   set :session_secret, "my_secret_key_thats_really_secret_i_*swear*"
 
+  if ENV["PORT"]
+    set :port, ENV["PORT"]
+  end
+
   def current_user
     # If you're logged in, return logged in User
     # If not logged in, return nil
