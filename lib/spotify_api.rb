@@ -66,7 +66,7 @@ class SpotifyApi
 
   def create_playlist_spotify
     r =  refresh_if_needed do
-     HTTParty.post "https://api.spotify.com/v1/users/sophiapeaslee/playlists",
+     HTTParty.post "https://api.spotify.com/v1/users/spotifyifyly/playlists",
       headers:{
         "Accept" => "application/json",
         "Authorization" => "Bearer #{key}",
