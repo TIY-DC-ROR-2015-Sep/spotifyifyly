@@ -22,4 +22,25 @@ class Search
     end
     song_dets
   end
+
+  def self.create_playlist_spotify
+    r = HTTParty.post "https://api.spotify.com//v1/users/spotsfyifyly/playlists",
+    headers:{
+      "Accept" => "application/json",
+      "Authorization" => "Bearer #{key}",
+      "Content-Type:" => "application/json"
+    },
+      body: {
+    name: "This week's playlist",
+    public: true
+      }.to_json
+  end
+
+  def self.add_songs_to_playlist_spotify song
+  end
+
+  def self.remove_songs_from_spotify song
+    r = HTTParty.post ""
+  end
+
 end
