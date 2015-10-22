@@ -1,19 +1,19 @@
 require 'sinatra/base'
 require 'pry'
 require 'gravatarify'
-require 'rollbar'
+require 'rollbar/middleware/sinatra'
 
 require './db/setup'
 require './lib/all'
 
-if ENV["ROLLBAR_ACCESS_TOKEN"]
-  Rollbar.configure do |config|
-    config.access_token = ENV["ROLLBAR_ACCESS_TOKEN"]
-  end
-end
 
 Search = SpotifyApi.new
 Search.refresh_key if Search.key.nil?
+
+Rollbar.configure do |config|
+  config.access_token = ENV["ROLLBAR_ACCESS_TOKEN"]
+end if ENV["ROLLBAR_ACCESS_TOKEN"]
+
 
 class Spotifyifyly < Sinatra::Base
   helpers Gravatarify::Helper
@@ -22,6 +22,8 @@ class Spotifyifyly < Sinatra::Base
 
   set :logging, true
   set :session_secret, (ENV["SESSION_SECRET"] || "this_isnt_really_secret_but_its_only_for_development_so_thats_okay")
+
+  use Rollbar::Middleware::Sinatra
 
   if ENV["PORT"]
     set :port, ENV["PORT"]
