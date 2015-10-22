@@ -7,6 +7,7 @@ gem 'minitest'
 gem 'did_you_mean'
 gem 'sinatra'
 gem 'httparty'
+gem 'mandrill'
 
 group :development do
   gem 'sqlite3'
