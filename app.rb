@@ -174,7 +174,27 @@ class Spotifyifyly < Sinatra::Base
 
   get "/change_password" do
     login_required!
+    erb :change_password
+  end
 
+  post "/change_password" do
+    login_required!
+    binding.pry
+=begin
+    found = User.where(
+      email:    params[:email],
+      password: params[:password]
+    ).first
+
+    if found
+      session[:logged_in_user_id] = found.id
+      redirect to("/")
+    else
+      # Show the form again
+      @error = "Invalid username or password"
+      erb :login
+    end
+=end
   end
 
 end
