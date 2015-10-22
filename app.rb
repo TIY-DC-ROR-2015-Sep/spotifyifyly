@@ -66,7 +66,6 @@ class Spotifyifyly < Sinatra::Base
   end
 
   get "/" do
-    binding.pry
     Playlist.top_playlist
     erb :index
   end
@@ -167,6 +166,7 @@ class Spotifyifyly < Sinatra::Base
     s = Song.create( title: t["title"], suggested_by: current_user, artist: t["artist"], spotify_preview_url: t["preview_url"], album_name: t["album_name"], album_image: t["album_image"])
 
     if Playlist.add s
+      Vote.create! user_id: current_user.id, song_id: s.id
       set_message "Your song was added to the playlist!"
     else
       set_message "Your song is already on a playlist!"
