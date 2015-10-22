@@ -7,7 +7,6 @@ gem 'minitest'
 gem 'did_you_mean'
 gem 'sinatra'
 gem 'httparty'
-gem 'mandrill'
 gem 'gravatarify'
 
 gem 'rollbar'
