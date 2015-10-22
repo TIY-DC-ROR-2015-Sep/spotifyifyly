@@ -179,7 +179,6 @@ class Spotifyifyly < Sinatra::Base
 
   post "/change_password" do
     login_required!
-    binding.pry
     if params[:oldpass] != current_user.password
       set_message "Your old password was entered incorrectly"
       redirect to "/change_password"
