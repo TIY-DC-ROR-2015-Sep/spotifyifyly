@@ -66,7 +66,7 @@ class SpotifyApi
 
   def create_playlist_spotify
     r =  refresh_if_needed do
-     HTTParty.post "https://api.spotify.com/v1/users/spotifyifyly/playlists",
+     HTTParty.post "https://api.spotify.com/v1/users/tiydc/playlists",
       headers:{
         "Accept" => "application/json",
         "Authorization" => "Bearer #{key}",
@@ -91,7 +91,7 @@ class SpotifyApi
   def pull_playlist pl_id
     id = pl_id
     r = refresh_if_needed do # this finds the position of the song to be deleted
-    HTTParty.get "https://api.spotify.com/v1/users/spotifyifyly/playlists/#{id}/tracks",
+    HTTParty.get "https://api.spotify.com/v1/users/tiydc/playlists/#{id}/tracks",
       headers:{"Authorization" => "Bearer #{key}"}
    end
    if r
@@ -115,7 +115,7 @@ end
       song_dets = pull_playlist id #do this here to prevent pushing duplicate songs to the playlist
         if !song_dets.any? { |det| det[:uri] == song }
 
-          r = HTTParty.post "https://api.spotify.com/v1/users/spotifyifyly/playlists/#{id}/tracks?position=0&uris=#{m}",
+          r = HTTParty.post "https://api.spotify.com/v1/users/tiydc/playlists/#{id}/tracks?position=0&uris=#{m}",
             headers:{
               "Accept" => "application/json",
               "Authorization" => "Bearer #{key}"
@@ -130,7 +130,7 @@ end
       song_dets = pull_playlist id
         position = song_dets.index{ |h| h[:title] == "#{s}"}
         if position
-      r= HTTParty.delete "https://api.spotify.com/v1/users/spotifyifyly/playlists/#{id}/tracks",
+      r= HTTParty.delete "https://api.spotify.com/v1/users/tiydc/playlists/#{id}/tracks",
       headers:{
         "Accept" => "application/json",
         "Authorization" => "Bearer #{key}",
