@@ -66,8 +66,7 @@ class Spotifyifyly < Sinatra::Base
   end
 
   def get_digested message
-    sha256 = Digest::SHA256.new
-    sha256.hexdigest message
+    Digest::SHA256.hexdigest message
   end
 
   get "/" do
@@ -82,7 +81,7 @@ class Spotifyifyly < Sinatra::Base
   post "/handle_login" do
     found = User.where(
       email:    params[:email],
-      password: get_digested params[:password]
+      password: (get_digested params[:password])
     ).first
 
     if found
@@ -196,14 +195,14 @@ class Spotifyifyly < Sinatra::Base
 
   post "/change_password" do
     login_required!
-    if params[:oldpass] != current_user.password
+    if ( get_digested params[:oldpass] ) != current_user.password
       set_message "Your old password was entered incorrectly"
       redirect to "/change_password"
-    elsif params[:newpass] != params[:newpass2] || params[:newpass].length < 6
+    elsif ( params[:newpass] != params[:newpass2] ) || ( params[:newpass].length < 6 )
       set_message "Your passwords must match and be more than 6 characters"
       redirect to "/change_password"
     else
-      current_user.update password: params[:newpass]
+      current_user.update! password: (get_digested params[:newpass])
       set_message "Your password was changed"
       redirect to "/profile"
     end
@@ -216,6 +215,7 @@ class Spotifyifyly < Sinatra::Base
     end
     "Ok"
   end
+end
 
 
 if $PROGRAM_NAME == __FILE__
