@@ -74,6 +74,7 @@ class Spotifyifyly < Sinatra::Base
   get "/about" do
     erb :about
   end
+
   get "/login" do
     erb :login
   end
