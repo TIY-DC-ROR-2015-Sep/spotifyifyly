@@ -93,8 +93,8 @@ class SpotifyApi
     r = refresh_if_needed do # this finds the position of the song to be deleted
     HTTParty.get "https://api.spotify.com/v1/users/spotifyifyly/playlists/#{id}/tracks",
       headers:{"Authorization" => "Bearer #{key}"}
-
    end
+   if r
     song_dets = []
     r["items"].each do |song|
       finds = {
@@ -105,6 +105,7 @@ class SpotifyApi
     end
     song_dets
   end
+end
 
   def add_songs_to_playlist_spotify song_uri
     id = Playlist.find_by_name("top_playlist").plid
