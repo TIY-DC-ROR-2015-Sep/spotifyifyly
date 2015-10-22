@@ -1,5 +1,6 @@
 require 'sinatra/base'
 require 'pry'
+require 'gravatarify'
 
 require './db/setup'
 require './lib/all'
@@ -55,13 +56,25 @@ class Spotifyifyly < Sinatra::Base
     end
   end
 
+  def erb_for_user template_name
+    if current_user && current_user.wants_retro_layout?
+      erb template_name, layout: :retro_layout
+    else
+      erb template_name
+    end
+  end
+
   get "/" do
     Playlist.top_playlist
-    erb :index
+    erb_for_user :index
+  end
+
+  get "/about" do
+    erb :about
   end
 
   get "/login" do
-    erb :login
+    erb_for_user :login
   end
 
   post "/handle_login" do

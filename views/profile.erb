@@ -1,5 +1,5 @@
+<div class="account-retro">
 <h1 class="account">Account Overview</h1>
-
 <div class="col-md-12">
 <div class="profile">
     <h3 class="text-primary">Profile</h3>
@@ -28,3 +28,35 @@
       </ul>
   </div>
 </div>
+</div>
+
+<!-- Profile -->
+<section id="profile" class="content-section text-center">
+    <div class="download-section">
+        <div class="container">
+            <div class="col-lg-8 col-lg-offset-2">
+                <h2>Profile</h2>
+                <form role="form">
+                    <div class="form-group">
+                        <label class="control-label">Email:</label>
+                        <p class="form-control-static"><%= "#{current_user.email}" %></p>
+                        <label class="control-label">Name:</label>
+                        <p class="form-control-static"><%= "#{current_user.name}" %></p>
+                        <% if admin_user %>
+                            <button class="btn btn-default btn-lg"><a href="/invite">
+                                Invite New User
+                            </a></button>
+                        <% end %>
+                    </div>
+                    <h2 class=songs>User Songs</h2>
+                    <ul>
+                        <% @user_songs.each do |song| %>
+                            <p>
+                                <strong><%= song.artist %></strong>: <%= song.title %>
+                            </p>
+                        <% end %>
+                    </ul>
+             </div>
+        </div>
+    </div>
+</section>

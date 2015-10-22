@@ -5,6 +5,10 @@ class User < ActiveRecord::Base
   has_many :songs
   has_many :votes
 
+  def wants_retro_layout?
+    false
+  end
+
   def songs_vetoed
     vetoes = Veto.where( user_id: id )
     vetoes.map { |v| v.song }

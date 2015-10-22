@@ -7,7 +7,7 @@ body {
   margin: 0;
   font-family: fantasy;
   text-align:center;
-  background-image: url('/images/starbg.gif');
+  background-image: url('/retro_images/starbg.gif');
   background-repeat: repeat;
 }
 
@@ -67,7 +67,7 @@ input {
   padding-top: 10px;
 }
 
-.Songs {
+.download-section {
   color: #1ed760;
 }
 
