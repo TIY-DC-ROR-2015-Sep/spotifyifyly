@@ -30,6 +30,11 @@ input {
 .navbar {
   height: 1%;
 }
+
+.playlist-title {
+  color: #1ed760;
+}
+
 .navbar-inverse {
   background-color: #0b0b67;
   border-color: #080808;
@@ -55,10 +60,6 @@ input {
 
 }
 
-.index-header {
-  padding-top: 50px;
-}
-
 .textbox {
   padding-top: 10px;
   display: inline;
@@ -66,6 +67,12 @@ input {
 
 .header {
   padding-top: 40px;
+  background-color: #0b0b67;
+  padding-bottom: 15px;
+}
+
+.index-header {
+  padding-top: 55px;
 }
 
 .Songs {
