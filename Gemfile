@@ -9,6 +9,8 @@ gem 'sinatra'
 gem 'httparty'
 gem 'gravatarify'
 
+gem 'rollbar'
+
 group :development do
   gem 'sqlite3'
 end

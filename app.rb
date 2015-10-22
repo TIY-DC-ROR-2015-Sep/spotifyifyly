@@ -1,9 +1,16 @@
 require 'sinatra/base'
 require 'pry'
 require 'gravatarify'
+require 'rollbar'
 
 require './db/setup'
 require './lib/all'
+
+if ENV["ROLLBAR_ACCESS_TOKEN"]
+  Rollbar.configure do |config|
+    config.access_token = ENV["ROLLBAR_ACCESS_TOKEN"]
+  end
+end
 
 Search = SpotifyApi.new
 Search.refresh_key if Search.key.nil?
@@ -172,6 +179,14 @@ class Spotifyifyly < Sinatra::Base
       set_message "Your song is already on a playlist!"
     end
     redirect to("/")
+  end
+
+  get "/playlists" do
+    login_required!
+    Search.refresh_if_needed do
+      1 / 0
+    end
+    "Ok"
   end
 
 end
