@@ -43,8 +43,8 @@ class SpotifyApi
   def find_song_spotify song
     s = song.gsub(/\s/,'+').gsub(/'/,"%27")
 
-     refresh_if_needed do
-    r =  HTTParty.get "https://api.spotify.com/v1/search?q=#{s}&type=track",
+     r = refresh_if_needed do
+     HTTParty.get "https://api.spotify.com/v1/search?q=#{s}&type=track",
       headers:{"Authorization" => "Bearer #{key}"}
     end
 
