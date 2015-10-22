@@ -3,7 +3,9 @@ require 'pry'
 
 require './db/setup'
 require './lib/all'
-require './song_search.rb'
+
+Search = SpotifyApi.new
+Search.refresh_key if Search.key.nil?
 
 class Spotifyifyly < Sinatra::Base
   enable :sessions
