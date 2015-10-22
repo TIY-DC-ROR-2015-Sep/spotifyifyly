@@ -1,5 +1,6 @@
 require 'sinatra/base'
 require 'pry'
+require 'gravatarify'
 
 require './db/setup'
 require './lib/all'
@@ -8,6 +9,7 @@ Search = SpotifyApi.new
 Search.refresh_key if Search.key.nil?
 
 class Spotifyifyly < Sinatra::Base
+  helpers Gravatarify::Helper
   enable :sessions
   enable :method_override
 
