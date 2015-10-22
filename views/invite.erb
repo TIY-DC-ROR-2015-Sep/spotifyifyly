@@ -1,12 +1,23 @@
+<% if @new_user.errors.any? %>
+  <div class="error">
+    <p>Hold up!</p>
+    <ul>
+      <% @new_user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
 <div class="invite">
     <form method="post" action="/invite">
         <label>
             Name
-            <input type="text" name="name">
+            <input type="text" name="name" value="<%= @new_user.name %>">
         </label>
         <label>
             Email
-            <input type="text" name="email">
+            <input type="text" name="email" value="<%= @new_user.email %>">
         </label>
         <label>
             Password

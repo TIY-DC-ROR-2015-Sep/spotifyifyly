@@ -24,12 +24,11 @@ class Spotifyifyly < Sinatra::Base
     # If you're logged in, return logged in User
     # If not logged in, return nil
     logged_in_user_id = session[:logged_in_user_id]
-    User.find_by_id(logged_in_user_id)
+    @current_user ||= User.find_by_id(logged_in_user_id)
   end
 
   def admin_user
-    current_user_id = session[:logged_in_user_id]
-    User.find_by_id(current_user_id).admin?
+    current_user && current_user.admin?
   end
 
   def set_message text
@@ -90,20 +89,21 @@ class Spotifyifyly < Sinatra::Base
 
   post "/invite" do
     admin_required!
-    u = User.new
-    u.name = params[:name]
-    u.email = params[:email]
-    u.password = params[:password]
-    if u.save
+    @new_user = User.new
+    @new_user.name = params[:name]
+    @new_user.email = params[:email]
+    @new_user.password = params[:password]
+    if @new_user.save
       set_message "User has been created"
+      redirect to("/invite")
     else
-      set_message "Email is already in use"
+      erb :invite
     end
-    redirect to("/invite")
   end
 
   get "/invite" do
     admin_required!
+    @new_user = User.new
     erb :invite
   end
 
