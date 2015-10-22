@@ -15,13 +15,13 @@ class SpotifyApi
     puts "~~> Refreshing Spotify key <~~"
     encoded  = Base64.strict_encode64 "#{ClientId}:#{ClientSecret}"
     response = HTTParty.post "https://accounts.spotify.com/api/token",
-        query: {
-          grant_type: "refresh_token",
-          refresh_token: RefreshToken
-        },
-        headers: {
-          "Authorization" => "Basic #{encoded}"
-        }
+    query: {
+      grant_type: "refresh_token",
+      refresh_token: RefreshToken
+    },
+    headers: {
+      "Authorization" => "Basic #{encoded}"
+    }
 
     unless response.code == 200
       raise "Failed to get refreshed token: #{response}"
@@ -45,7 +45,7 @@ class SpotifyApi
 
     r = refresh_if_needed do
       HTTParty.get "https://api.spotify.com/v1/search?q=#{s}&type=track",
-                     headers:{"Authorization" => "Bearer #{key}"}
+      headers:{"Authorization" => "Bearer #{key}"}
     end
 
     song_dets = []
@@ -56,9 +56,53 @@ class SpotifyApi
         :album_image => song["album"]["images"][2],
         :artist => song["artists"][0]["name"],
         :preview_url => song["preview_url"]
+        :uri => song["uri"]
       }
       song_dets.push(finds)
     end
     song_dets
   end
+
+
+  def create_playlist_spotify
+    r = refresh_if_needed do
+    HTTParty.post "https://api.spotify.com/v1/users/spotifyifyly/playlists",
+      headers:{
+        "Accept" => "application/json",
+        "Authorization" => "Bearer #{key}",
+        "Content-Type:" => "application/json"
+      },
+      body: {
+        name: "This week's playlist",
+        public: true
+      }.to_json
+      end
+
+        @pl_info = {
+          :id => r["id"],
+          :pl_name => r["name"],
+          :pl_uri => r["uri"]
+        }
+  end
+
+  def add_songs_to_playlist_spotify pl_info
+    id = pl_info[:id]
+    Playlist.find_by_name("top_playlist").songs.each do |song|
+      m = song[:uri].gsub(/:/,"%3A")
+    r = refresh_if_needed do
+      HTTParty.post "https://api.spotify.com/v1/users/sophiapeaslee/playlists/#{id}/tracks?position=0&uris=#{m}
+",
+headers:{
+  "Accept" => "application/json",
+  "Authorization" => "Bearer #{key}"
+}
+    end
+  end
+
+  # def remove_songs_from_spotify pl_info
+  #   r = refresh_if_needed do
+  #     HTTParty.post ""
+  #   end
+  # end
+
 end
