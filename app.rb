@@ -1,18 +1,29 @@
 require 'sinatra/base'
 require 'pry'
+require 'gravatarify'
+require 'rollbar/middleware/sinatra'
 
 require './db/setup'
 require './lib/all'
 
+
 Search = SpotifyApi.new
 Search.refresh_key if Search.key.nil?
 
+Rollbar.configure do |config|
+  config.access_token = ENV["ROLLBAR_ACCESS_TOKEN"]
+end if ENV["ROLLBAR_ACCESS_TOKEN"]
+
+
 class Spotifyifyly < Sinatra::Base
+  helpers Gravatarify::Helper
   enable :sessions
   enable :method_override
 
   set :logging, true
   set :session_secret, (ENV["SESSION_SECRET"] || "this_isnt_really_secret_but_its_only_for_development_so_thats_okay")
+
+  use Rollbar::Middleware::Sinatra
 
   if ENV["PORT"]
     set :port, ENV["PORT"]
@@ -22,12 +33,11 @@ class Spotifyifyly < Sinatra::Base
     # If you're logged in, return logged in User
     # If not logged in, return nil
     logged_in_user_id = session[:logged_in_user_id]
-    User.find_by_id(logged_in_user_id)
+    @current_user ||= User.find_by_id(logged_in_user_id)
   end
 
   def admin_user
-    current_user_id = session[:logged_in_user_id]
-    User.find_by_id(current_user_id).admin?
+    current_user && current_user.admin?
   end
 
   def set_message text
@@ -56,6 +66,7 @@ class Spotifyifyly < Sinatra::Base
   end
 
   get "/" do
+    binding.pry
     Playlist.top_playlist
     erb :index
   end
@@ -88,20 +99,21 @@ class Spotifyifyly < Sinatra::Base
 
   post "/invite" do
     admin_required!
-    u = User.new
-    u.name = params[:name]
-    u.email = params[:email]
-    u.password = params[:password]
-    if u.save
+    @new_user = User.new
+    @new_user.name = params[:name]
+    @new_user.email = params[:email]
+    @new_user.password = params[:password]
+    if @new_user.save
       set_message "User has been created"
+      redirect to("/invite")
     else
-      set_message "Email is already in use"
+      erb :invite
     end
-    redirect to("/invite")
   end
 
   get "/invite" do
     admin_required!
+    @new_user = User.new
     erb :invite
   end
 
@@ -192,6 +204,15 @@ class Spotifyifyly < Sinatra::Base
     end
   end
 
-end
+  get "/playlists" do
+    login_required!
+    Search.refresh_if_needed do
+      1 / 0
+    end
+    "Ok"
+  end
 
-Spotifyifyly.run!
+
+if $PROGRAM_NAME == __FILE__
+  Spotifyifyly.run!
+end

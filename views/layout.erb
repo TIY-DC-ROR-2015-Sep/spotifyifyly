@@ -27,6 +27,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="/">Spotifyifyly</a>
+
                 </div>
 
             <!-- Makes navbar collabsible, from w3c tutorial -->
@@ -44,11 +45,11 @@
                     </form>
                   </li>
                 <% else %>
-                  <div class="login-menu">
+                  <div class="navbar navbar-right">
                    <form action="/handle_login" method="post">
                      <fieldset class='textbox'>
-                       <input style="margin-top: 8px" name="email" type="text" placeholder="Username" />
-                       <input style="margin-top: 8px" name="password" type="password" placeholder="Passsword" />
+                       <input class="login" name="email" type="text" placeholder="Username" />
+                       <input class="login" name="password" type="password" placeholder="Passsword" />
                        <input class="btn-primary" name="commit" type="submit" value="Log In" />
                      </fieldset>
                    </form>
@@ -57,7 +58,6 @@
             </div>
             </div>
             </nav>
-            </div>
         </header>
 
         <%= yield %>
@@ -78,7 +78,8 @@
                 <p class="contact">email: <a href="mailto:info@spotifyifyly.com">info@spotifyifyly.com</a></p>
             </div>
         </section>
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    </body>
+     </div>
+     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  </body>
 </html>
