@@ -3,9 +3,7 @@
 <div class="col-md-12">
 <div class="profile">
     <h3 class="text-primary">Profile</h3>
-    <% if current_user %>
-        <%= gravatar_tag "#{current_user.email}", :size => 250 %>
-        <% end %>
+        <%= gravatar_tag current_user.email, size: 250 %>
     <form role="form">
       <div class="form-group">
         <label class="control-label">Email</label>
