@@ -5,9 +5,6 @@ class Vote < ActiveRecord::Base
   belongs_to :song
 
   def vote_check_passed
-    if user.votes.count < 10
-      return true
-    end
-    return false
+    user.votes.count < 10
   end
 end
