@@ -3,14 +3,16 @@ require 'pry'
 
 require './db/setup'
 require './lib/all'
-require './song_search.rb'
+
+Search = SpotifyApi.new
+Search.refresh_key if Search.key.nil?
 
 class Spotifyifyly < Sinatra::Base
   enable :sessions
   enable :method_override
 
   set :logging, true
-  set :session_secret, "my_secret_key_thats_really_secret_i_*swear*"
+  set :session_secret, (ENV["SESSION_SECRET"] || "this_isnt_really_secret_but_its_only_for_development_so_thats_okay")
 
   if ENV["PORT"]
     set :port, ENV["PORT"]
@@ -54,6 +56,7 @@ class Spotifyifyly < Sinatra::Base
   end
 
   get "/" do
+    Playlist.top_playlist
     erb :index
   end
 
@@ -159,9 +162,16 @@ class Spotifyifyly < Sinatra::Base
     login_required!
     j = params[:result]
     t = JSON.parse(j)
-    Song.create( title: t["title"], suggested_by: current_user, artist: t["artist"], spotify_preview_url: t["preview_url"], album_name: t["album_name"], album_image: t["album_image"])
+    s = Song.create( title: t["title"], suggested_by: current_user, artist: t["artist"], spotify_preview_url: t["preview_url"], album_name: t["album_name"], album_image: t["album_image"])
+
+    if Playlist.add s
+      set_message "Your song was added to the playlist!"
+    else
+      set_message "Your song is already on a playlist!"
+    end
     redirect to("/")
   end
+
 end
 
 Spotifyifyly.run!

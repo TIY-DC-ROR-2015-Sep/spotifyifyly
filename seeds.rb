@@ -7,7 +7,7 @@ User.delete_all
 Song.delete_all
 
 
-names = ['andrew', 'devin', 'justin', 'sophia', 'jamaal']
+names = ['james', 'andrew', 'devin', 'justin', 'sophia', 'jamaal']
 
 names.each do |name|
   User.create! email: "#{name}@example.com", password: "hunter2", name: name
@@ -34,5 +34,5 @@ songs = [{
   ]
 
 songs.each do |song|
-  Song.create! title: song[:title], artist: song[:artist], suggested_by: User.all.sample
+  s = Song.create! title: song[:title], artist: song[:artist], suggested_by: User.all.sample
 end
