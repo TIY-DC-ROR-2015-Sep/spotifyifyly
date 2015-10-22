@@ -102,7 +102,7 @@ class Spotifyifyly < Sinatra::Base
 
   post "/invite" do
     admin_required!
-    temp_password = ('a'..'z').to_a.shuffle[0,8].join 
+    temp_password = 'hunter2' #('a'..'z').to_a.shuffle[0,8].join 
     @new_user = User.new
     @new_user.name = params[:name]
     @new_user.email = params[:email]
