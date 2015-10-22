@@ -172,6 +172,11 @@ class Spotifyifyly < Sinatra::Base
     redirect to("/")
   end
 
+  get "/change_password" do
+    login_required!
+
+  end
+
 end
 
 Spotifyifyly.run!
