@@ -65,8 +65,12 @@ class Spotifyifyly < Sinatra::Base
     end
   end
 
+  def get_digested message
+    sha256 = Digest::SHA256.new
+    sha256.hexdigest message
+  end
+
   get "/" do
-    binding.pry
     Playlist.top_playlist
     erb :index
   end
@@ -78,7 +82,7 @@ class Spotifyifyly < Sinatra::Base
   post "/handle_login" do
     found = User.where(
       email:    params[:email],
-      password: params[:password]
+      password: get_digested params[:password]
     ).first
 
     if found
@@ -99,10 +103,11 @@ class Spotifyifyly < Sinatra::Base
 
   post "/invite" do
     admin_required!
+    temp_password = ('a'..'z').to_a.shuffle[0,8].join 
     @new_user = User.new
     @new_user.name = params[:name]
     @new_user.email = params[:email]
-    @new_user.password = params[:password]
+    @new_user.password = get_digested temp_password
     if @new_user.save
       set_message "User has been created"
       redirect to("/invite")
