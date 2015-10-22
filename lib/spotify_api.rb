@@ -66,7 +66,7 @@ class SpotifyApi
 
   def create_playlist_spotify
     r = refresh_if_needed do
-    HTTParty.post "https://api.spotify.com/v1/users/spotifyifyly/playlists",
+      HTTParty.post "https://api.spotify.com/v1/users/spotifyifyly/playlists",
       headers:{
         "Accept" => "application/json",
         "Authorization" => "Bearer #{key}",
@@ -76,34 +76,67 @@ class SpotifyApi
         name: "This week's playlist",
         public: true
       }.to_json
-      end
-
-        pl_info = {
-          :id => r["id"],
-          :pl_name => r["name"],
-          :pl_uri => r["uri"]
-        }
-    add_songs_to_playlist_spotify pl_info    
-  end
-
-  def add_songs_to_playlist_spotify pl_info
-    id = pl_info[:id]
-    Playlist.find_by_name("top_playlist").songs.each do |song|
-      m = song[:uri].gsub(/:/,"%3A")
-    r = refresh_if_needed do
-      HTTParty.post "https://api.spotify.com/v1/users/sophiapeaslee/playlists/#{id}/tracks?position=0&uris=#{m}
-",
-headers:{
-  "Accept" => "application/json",
-  "Authorization" => "Bearer #{key}"
-}
     end
+
+    pl_info = {
+      :pl_id => r["id"],
+      :pl_name => r["name"],
+      :pl_uri => r["uri"]
+    }
+     playlist = Playlist.find_by_name("top_playlist")
+     playlist.update(plid: pl_info[:pl_id])
   end
 
-  # def remove_songs_from_spotify pl_info
-  #   r = refresh_if_needed do
-  #     HTTParty.post ""
-  #   end
-  # end
+  def pull_playlist pl_id
+    id = pl_id
+    r = refresh_if_needed do # this finds the position of the song to be deleted
+      HTTParty.get "https://api.spotify.com/v1/users/spotifyifyly/playlists/#{id}/tracks",
+      headers:{"Authorization" => "Bearer #{key}"}
+    end
+    song_dets = []
+    r["tracks"]["items"].each do |song|
+      finds = {
+        :title => song["name"],
+        :uri => song["uri"]
+      }
+      song_dets.push(finds)
+    end
+    song_dets
+  end
+
+  def add_songs_to_playlist_spotify song_uri
+    id = Playlist.find_by_name("top_playlist").plid
+    song = song_uri
+      m = song.gsub(/:/,"%3A") #converts : so it is searchable here
+      pull_playlist id
+      if !song_dets.uri.include?(song)
+      r = refresh_if_needed do
+        HTTParty.post "https://api.spotify.com/v1/users/spotifyifyly/playlists/#{id}/tracks?position=0&uris=#{m}
+        ",
+        headers:{
+          "Accept" => "application/json",
+          "Authorization" => "Bearer #{key}"
+        }
+      end
+    end
+
+    def remove_songs_from_spotify song #need to figure out how to pass in name to be deleted
+      id = Playlist.find_by_name("top_playlist").plid
+      s = song.title
+      pull_playlist id
+        position = song_dets.index(title: "#{s}")
+
+      r= HTTParty.delete "https://api.spotify.com/v1/users/spotifyifyly/playlists/#{id}/tracks",
+      headers:{
+        "Accept" => "application/json",
+        "Authorization" => "Bearer #{key}",
+        "Content-Type:" => "application/json"
+      },
+      body: {
+        tracks: [
+          positions: position,
+          uri: song_dets[position][:uri] #need to grab specific uri to be deleted
+        }.to_json
+      end
 
 end
