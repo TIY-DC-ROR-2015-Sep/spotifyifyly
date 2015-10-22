@@ -25,6 +25,7 @@ GEM
     coderay (1.1.0)
     did_you_mean (0.10.0)
       interception
+    excon (0.45.4)
     gravatarify (3.1.1)
     httparty (0.13.7)
       json (~> 1.8)
@@ -32,6 +33,9 @@ GEM
     i18n (0.7.0)
     interception (0.5)
     json (1.8.3)
+    mandrill-api (1.0.53)
+      excon (>= 0.16.0, < 1.0)
+      json (>= 1.7.7, < 2.0)
     method_source (0.8.2)
     mime-types (2.6.2)
     mini_portile (0.6.2)
@@ -52,6 +56,7 @@ GEM
       rack (>= 1.0)
     rollbar (2.4.0)
       multi_json
+    rubyntlm (0.5.2)
     sinatra (1.4.6)
       rack (~> 1.4)
       rack-protection (~> 1.4)
@@ -74,10 +79,12 @@ DEPENDENCIES
   did_you_mean
   gravatarify
   httparty
+  mandrill-api
   minitest
   pg
   pry
   rollbar
+  rubyntlm
   sinatra
   sqlite3
 

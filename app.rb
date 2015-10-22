@@ -66,7 +66,6 @@ class Spotifyifyly < Sinatra::Base
   end
 
   get "/" do
-    binding.pry
     Playlist.top_playlist
     erb :index
   end
