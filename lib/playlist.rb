@@ -22,11 +22,11 @@ class Playlist < ActiveRecord::Base
       list = big_list.reject { |s| s.vetoed? }
       songs_to_delete = big_list - list
         songs_to_delete.each do |song|
-          Spotify_api.new.remove_songs_from_spotify song
+          SpotifyApi.new.remove_songs_from_spotify song
         end
       if list.any?
         PlaylistSong.create( playlist_id: top_playlist.id, song_id: list.first.id )
-        Spotify_api.new.add_songs_to_playlist_spotify list.first.uri
+        SpotifyApi.new.add_songs_to_playlist_spotify list.first.uri
       end
     end
   end

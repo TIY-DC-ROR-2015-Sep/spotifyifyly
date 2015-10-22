@@ -3,12 +3,12 @@ require 'httparty'
 class SpotifyApi
   attr_reader :key
 
-  ClientId     = "9664357146fe44a5a9c0c1247f623e76"
-  ClientSecret = ENV["SPOTIFY_SECRET_KEY"]    || File.read("spotify_secret.txt").chomp
-  RefreshToken = ENV["SPOTIFY_REFRESH_TOKEN"] || File.read("spotify_refresh.txt").chomp
+  #ClientId     = "9664357146fe44a5a9c0c1247f623e76"
+#  ClientSecret = ENV["SPOTIFY_SECRET_KEY"]    || File.read("spotify_secret.txt").chomp
+#  RefreshToken = ENV["SPOTIFY_REFRESH_TOKEN"] || File.read("spotify_refresh.txt").chomp
 
   def initialize
-    @key = nil
+    @key = "BQDPrt7aYM_u8DdZrjnZRLlqF0nBnTy0O4eKMZ7nEMk9IMWlve5Peq17yRx-bZMf8o5FfzW9ogqQE_fiBznO8DOzoLfwjv1taFwaRJ4isAayu1qtdOFQr6tdoXY_HmuhnNjqoxfTEAs0IHc1o0kwLHICbqTREisV96YChEUhof4H13m3pL7Rws1Wgo25XFCjIZiYl4hAkRB5d4UL7Y8Z7ZnQJQmCbgbJq2D2qGcNetdxnqW0wDepL8z-3lg"||nil
   end
 
   def refresh_key
@@ -43,10 +43,10 @@ class SpotifyApi
   def find_song_spotify song
     s = song.gsub(/\s/,'+').gsub(/'/,"%27")
 
-    r = refresh_if_needed do
-      HTTParty.get "https://api.spotify.com/v1/search?q=#{s}&type=track",
+     #refresh_if_needed do
+    r =  HTTParty.get "https://api.spotify.com/v1/search?q=#{s}&type=track",
       headers:{"Authorization" => "Bearer #{key}"}
-    end
+  #  end
 
     song_dets = []
     r["tracks"]["items"].first(5).each do |song|
@@ -55,7 +55,7 @@ class SpotifyApi
         :album_name =>  song["album"]["name"],
         :album_image => song["album"]["images"][2],
         :artist => song["artists"][0]["name"],
-        :preview_url => song["preview_url"]
+        :preview_url => song["preview_url"],
         :uri => song["uri"]
       }
       song_dets.push(finds)
@@ -65,8 +65,8 @@ class SpotifyApi
 
 
   def create_playlist_spotify
-    r = refresh_if_needed do
-      HTTParty.post "https://api.spotify.com/v1/users/spotifyifyly/playlists",
+     #refresh_if_needed do
+    r =  HTTParty.post "https://api.spotify.com/v1/users/sophiapeaslee/playlists",
       headers:{
         "Accept" => "application/json",
         "Authorization" => "Bearer #{key}",
@@ -76,25 +76,27 @@ class SpotifyApi
         name: "This week's playlist",
         public: true
       }.to_json
-    end
+    #end
 
     pl_info = {
       :pl_id => r["id"],
       :pl_name => r["name"],
       :pl_uri => r["uri"]
     }
+
      playlist = Playlist.find_by_name("top_playlist")
      playlist.update(plid: pl_info[:pl_id])
   end
 
   def pull_playlist pl_id
     id = pl_id
-    r = refresh_if_needed do # this finds the position of the song to be deleted
-      HTTParty.get "https://api.spotify.com/v1/users/spotifyifyly/playlists/#{id}/tracks",
+    #r = refresh_if_needed do # this finds the position of the song to be deleted
+    r = HTTParty.get "https://api.spotify.com/v1/users/sophiapeaslee/playlists/#{id}/tracks",
       headers:{"Authorization" => "Bearer #{key}"}
-    end
+
+  #  end
     song_dets = []
-    r["tracks"]["items"].each do |song|
+    r["items"].each do |song|
       finds = {
         :title => song["name"],
         :uri => song["uri"]
@@ -107,16 +109,20 @@ class SpotifyApi
   def add_songs_to_playlist_spotify song_uri
     id = Playlist.find_by_name("top_playlist").plid
     song = song_uri
+    if song
       m = song.gsub(/:/,"%3A") #converts : so it is searchable here
-      pull_playlist id
-      if !song_dets.uri.include?(song)
-      r = refresh_if_needed do
-        HTTParty.post "https://api.spotify.com/v1/users/spotifyifyly/playlists/#{id}/tracks?position=0&uris=#{m}
-        ",
-        headers:{
-          "Accept" => "application/json",
-          "Authorization" => "Bearer #{key}"
-        }
+      song_dets = pull_playlist id #do this here to prevent pushing duplicate songs to the playlist
+      binding.pry
+        if !song_dets.any? { |det| det[:uri] == song }
+          #r = refresh_if_needed do
+
+          r = HTTParty.post "https://api.spotify.com/v1/users/sophiapeaslee/playlists/#{id}/tracks?position=0&uris=#{m}",
+            headers:{
+              "Accept" => "application/json",
+              "Authorization" => "Bearer #{key}"
+            }
+          end
+        #end
       end
     end
 
@@ -135,8 +141,8 @@ class SpotifyApi
       body: {
         tracks: [
           positions: position,
-          uri: song_dets[position][:uri] #need to grab specific uri to be deleted
-        }.to_json
+          uri: song_dets[position][:uri] #dont need to convert because passed in body
+        ]}.to_json
       end
 
 end

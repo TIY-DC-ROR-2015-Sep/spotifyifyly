@@ -8,7 +8,7 @@ letters.each do |l|
 end
 
 Playlist.create(name: "top_playlist")
-Spotify_api.new.create_playlist_spotify
+SpotifyApi.new.create_playlist_spotify
 
 Song.find_each do |s|
   Playlist.add s
