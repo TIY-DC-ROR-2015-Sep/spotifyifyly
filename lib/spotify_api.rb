@@ -125,7 +125,7 @@ class SpotifyApi
 
     def remove_songs_from_spotify song #need to figure out how to pass in name to be deleted
       id = Playlist.find_by_name("top_playlist").plid
-      s = song
+      s = song.title
       song_dets = pull_playlist id
         position = song_dets.index{ |h| h[:title] == "#{s}"}
         if position
