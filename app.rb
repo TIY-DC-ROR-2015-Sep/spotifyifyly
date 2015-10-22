@@ -180,21 +180,17 @@ class Spotifyifyly < Sinatra::Base
   post "/change_password" do
     login_required!
     binding.pry
-=begin
-    found = User.where(
-      email:    params[:email],
-      password: params[:password]
-    ).first
-
-    if found
-      session[:logged_in_user_id] = found.id
-      redirect to("/")
+    if params[:oldpass] != current_user.password
+      set_message "Your old password was entered incorrectly"
+      redirect to "/change_password"
+    elsif params[:newpass] != params[:newpass2] || params[:newpass].length < 6
+      set_message "Your passwords must match and be more than 6 characters"
+      redirect to "/change_password"
     else
-      # Show the form again
-      @error = "Invalid username or password"
-      erb :login
+      current_user.update password: params[:newpass]
+      set_message "Your password was changed"
+      redirect to "/profile"
     end
-=end
   end
 
 end

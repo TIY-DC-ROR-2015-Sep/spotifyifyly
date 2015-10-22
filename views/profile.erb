@@ -9,6 +9,7 @@
         <p class="form-control-static"><%= "#{current_user.email}" %></p>
         <label class="control-label">Name</label>
         <p class="form-control-static"><%= "#{current_user.name}" %></p>
+       <a href="/change_password">Change Password</a></li>
         <% if admin_user %>
             <button><a href="/invite">
                 Invite New User

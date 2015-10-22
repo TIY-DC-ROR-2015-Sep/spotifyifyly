@@ -37,7 +37,6 @@
                 <li><a href="/about">About</a></li>
                 <% if current_user %>
                   <li><a href="/profile"><%= current_user.name.capitalize %></a></li>
-                  <li><a href="/change_password">Change Password</a></li>
                   <li>
                     <form action="/logout" method="POST">
                       <input type="hidden" name="_method" value="DELETE">
