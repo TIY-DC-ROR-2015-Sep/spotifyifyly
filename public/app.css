@@ -27,6 +27,10 @@ input {
   background: #eef66c;
 }
 
+.navbar {
+  height: 1%;
+}
+
 .playlist-title {
   color: #1ed760;
 }
@@ -37,11 +41,12 @@ input {
 }
 
 .navbar-inverse .navbar-brand {
-    color: #1ed760;
+  color: #1ed760;
 }
 
 .navbar-inverse .navbar-nav>li>a {
   color: #1ed760;
+  background-color: #0b0b67;
 }
 
 .login-banner {
@@ -50,21 +55,24 @@ input {
 
 .logout-btn {
   color: #1ed760;
-  background-color: #0b0b67;
-  padding-top: 15px;
-  padding-bottom: 15px;
+  background: #e30000;
+  padding-top: 12px;
+
 }
 
 .textbox {
-    display: inline;
+  padding-top: 10px;
+  display: inline;
+}
+
+.header {
+  padding-top: 40px;
+  background-color: #0b0b67;
+  padding-bottom: 15px;
 }
 
 .index-header {
   padding-top: 55px;
-}
-
-.header {
-  padding-top: 10px;
 }
 
 .Songs {
@@ -92,7 +100,7 @@ input {
 }
 
 .footer-title {
-  padding-top: 100px;
+  padding-top: 50px;
   color: #1ed760;
 }
 
