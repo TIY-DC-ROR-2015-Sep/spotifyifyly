@@ -78,11 +78,12 @@ class SpotifyApi
       }.to_json
       end
 
-        @pl_info = {
+        pl_info = {
           :id => r["id"],
           :pl_name => r["name"],
           :pl_uri => r["uri"]
         }
+    add_songs_to_playlist_spotify pl_info    
   end
 
   def add_songs_to_playlist_spotify pl_info
