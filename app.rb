@@ -66,6 +66,7 @@ class Spotifyifyly < Sinatra::Base
   end
 
   get "/" do
+    binding.pry
     Playlist.top_playlist
     erb :index
   end
@@ -193,4 +194,6 @@ class Spotifyifyly < Sinatra::Base
 
 end
 
-Spotifyifyly.run!
+if $PROGRAM_NAME == __FILE__
+  Spotifyifyly.run!
+end
