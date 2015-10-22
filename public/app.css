@@ -1,62 +1,5 @@
 html {
   height: 100%;
-<<<<<<< HEAD
-}
-
-body {
-  height: 100%;
-  margin: 0;
-  font-family: fantasy;
-  text-align:center;
-  background-image: url('/images/starbg.gif');
-  background-repeat: repeat;
-}
-
-a {
-  color: #ff69b4;
-}
-
-li {
-  color: #ff8300;
-}
-
-.navbar-inverse {
-  background-color: #0b0b67;
-  border-color: #080808;
-}
-
-.navbar-inverse .navbar-brand {
-    color: #1ed760;
-}
-
-.navbar-inverse .navbar-nav>li>a {
-  color: #1ed760;
-}
-
-.navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:focus, .navbar-inverse .navbar-nav>.active>a:hover {
-  color: #1ed760;
-  background-color: #0b0b67;
-}
-
-.Songs {
-  color: #1ed760;
-}
-
-.account {
-  color: #1ed760;
-}
-
-.text-primary {
-  color: #1ed760;
-}
-
-.control-label {
-  color: #b378d3;
-}
-
-.form-control-static {
-  color: #eef66c;
-=======
 }
 
 body {
@@ -163,7 +106,7 @@ marquee {
 
 .jnco {
   padding: 10px 0 20px 0;
->>>>>>> master
+
 }
 
 .songs {
@@ -181,4 +124,3 @@ marquee {
 marquee {
   color: #eef66c;
 }
-
