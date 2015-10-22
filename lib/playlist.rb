@@ -18,7 +18,7 @@ class Playlist < ActiveRecord::Base
 
     Playlist.all.each do |pl|
       next if pl == top_playlist
-      big_list = pl.songs.sort_by { |s| s.votes.count }
+      big_list = pl.songs.sort_by { |s| s.votes.count }.reverse
       list = big_list.reject { |s| s.vetoed? }
 
       if list.any?

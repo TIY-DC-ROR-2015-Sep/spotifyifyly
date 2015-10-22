@@ -21,20 +21,35 @@
 
 
     <div class="Songs">
-        <% Song.all.each do |song| %>
-    <li>
-        <strong><%= song.title %></strong> by <%= song.artist %>, suggested by <%= song.suggested_by.name.capitalize %><br>
-        <%= song.genre %><a href="song.spotify_preview_url"> Preview on Spotify</a>
-        <form action="/vote" method="POST">
-            <input type="hidden" name="song_id" value="<%= song.id %>">
-            <button><img src="/images/vote.gif"></button>
-        </form>
-        <form action="/veto" method="POST">
-            <input type="hidden" name="song_id" value="<%= song.id %>">
-            <button>Veto</button>
-        </form>
-    </li>
-    <br>
-    <% end %>
+        <% Playlist.find_by_name("top_playlist").songs.each do |song| %>
+        <li>
+            <strong><%= song.title %></strong> by <%= song.artist %>, suggested by <%= song.suggested_by.name.capitalize %><br>
+            <%= song.genre %><a href="song.spotify_preview_url"> Preview on Spotify</a>
+            <form action="/veto" method="POST">
+                <input type="hidden" name="song_id" value="<%= song.id %>">
+                <button>Veto</button>
+            </form>
+        </li>
+        <br>
+        <% end %>
     </div>
+
+    <div class="Songs">
+        <% Playlist.all.each do |playlist| %>
+            <% next if playlist.name == "top_playlist" %>
+            <h2 class="playlist-title"><%= playlist.name %></h2>
+            <% playlist.songs.each do |song| %>
+              <li>
+                  <strong><%= song.title %></strong> by <%= song.artist %>, suggested by <%= song.suggested_by.name.capitalize %><br>
+                  <%= song.genre %><a href="song.spotify_preview_url"> Preview on Spotify</a>
+                  <form action="/vote" method="POST">
+                      <input type="hidden" name="song_id" value="<%= song.id %>">
+                      <button><img src="/images/vote.gif"></button>
+                  </form>
+              </li>
+              <br>
+            <% end %>
+        <% end %>
+    </div>
+      
 </div>

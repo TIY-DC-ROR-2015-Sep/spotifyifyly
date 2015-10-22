@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :email
 
   has_many :songs
+  has_many :votes
 
   def songs_vetoed
     vetoes = Veto.where( user_id: id )
