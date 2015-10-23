@@ -1,85 +1,139 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>Spotifyifyly</title>
-        <!-- Bootstrap -->
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-        <link rel="stylesheet" href="app.css">
-        <!-- set the character encoding for the page -->
-        <meta charset="utf-8">
-        <!-- set viewport for responsiveness -->
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-    </head>
+<head>
 
-    <body>
-      <div class="container-fluid">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <!-- this holds the header -->
-        <header class="index-header">
-            <div class="col-md-12">
-     <!-- Navbar added from w3c bootstrap tutorial -->
-            <nav class="navbar navbar-inverse navbar-fixed-top">
-                <div class="container-fluid">
-                <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
+    <title>Spotifyifyly - Playlist Curation Service</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/app.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
+                    <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand" href="/">Spotifyifyly</a>
-
-                </div>
-
-            <!-- Makes navbar collabsible, from w3c tutorial -->
-            <div class="collapse navbar-collapse" id="myNavbar">
-            <ul class="nav navbar-nav">
-                <li><a href="/profile">Profile</a></li>
-                <li><a href="/playlists">Playlists</a></li>
-                <li><a href="/about">About</a></li>
-                <% if current_user %>
-                  <li><a href="/profile"><%= current_user.name.capitalize %></a></li>
-                  <li>
-                    <form action="/logout" method="POST">
-                      <input type="hidden" name="_method" value="DELETE">
-                      <button class="logout-btn">Logout</button>
-                    </form>
-                  </li>
-                <% else %>
-                  <div class="navbar navbar-right">
-                   <form action="/handle_login" method="post">
-                     <fieldset class='textbox'>
-                       <input class="login" name="email" type="text" placeholder="Username" />
-                       <input class="login" name="password" type="password" placeholder="Passsword" />
-                       <input class="btn-primary" name="commit" type="submit" value="Log In" />
-                     </fieldset>
-                   </form>
-                <% end %>
-            </ul>
+                <a class="navbar-brand page-scroll" href="/">
+                    <i class="fa fa-play-circle"></i>  <span class="light">Spotify</span>-ifyly
+                </a>
             </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
+                <ul class="nav navbar-nav">
+                    <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="/">Playlists</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="/about">About</a>
+                    </li>
+
+                    <% if current_user %>
+                        <li><a href="/profile"><%= current_user.name %></a></li>
+                        <li>
+                            <form action="/logout" method="POST" class="form-inline"">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <button class="btn btn-default btn-md">Logout</button>
+                            </form>
+                        </li>
+                    <% else %>
+                        <div class="container">
+                            <% if @error %>
+                                <p><%= @error %></p>
+                            <% end %>
+                            <form method="post" action="/handle_login" class="form-inline">
+                                <div class="form-group">
+                                    <label class="sr-only" for="EmailAddress">Email address</label>
+                                    <input type="email" name="email" class="form-control" id="exampleInputEmail3" placeholder="Email">
+                                </div>
+                                <div class="form-group">
+                                    <label class="sr-only" for="exampleInputPassword3">Password</label>
+                                    <input type="password" name="password" class="form-control" id="exampleInputPassword3" placeholder="Password">
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox"> Remember me
+                                    </label>
+                                </div>
+                                <button class="btn btn-default btn-sm">Login</button>
+                            </form>
+                    <% end %>
+
+
+                    <!-- <li> -->
+                       <!-- <a class="btn btn-default btn-sm" href="/retro">Retro Mode</a> -->
+                   <!-- </li> -->
+                </ul>
             </div>
-            </nav>
-        </header>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
 
-        <%= yield %>
+    <%= yield %>
 
-        <% if m = read_and_reset_message %>
-          <!-- <marquee class="flash">
-            <%= m %>
-          </marquee> -->
-          <script type="text/javascript">
-            alert("<%= m %>")
-          </script>
-        <% end %>
-
-        <!-- Contact section-->
-        <section class="row">
-            <div class="col-12">
-                <h3 class="footer-title">Contact Us</h3>
-                <p class="contact">email: <a href="mailto:info@spotifyifyly.com">info@spotifyifyly.com</a></p>
+    <!-- Contact Section -->
+    <section id="contact" class="container content-section text-center">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2">
+                <h2>Contact Spotify-ifyly</h2>
+                <p>Feel free to email us to provide some feedback on our site!</p>
+                <p><a href="mailto:feedback@spotifyifyly.com">feedback@spotifyifyly.com</a>
+                </p>
+                <ul class="list-inline banner-social-buttons">
+                    <li>
+                        <a href="https://github.com/TIY-DC-ROR-2015-Sep/spotifyifyly" class="btn btn-default btn-lg"><i class="fa fa-github fa-fw"></i> <span class="network-name">Github</span></a>
+                    </li>
+                </ul>
             </div>
-        </section>
-     </div>
-     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-  </body>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container text-center">
+            <p>&copy; Spotify-ifyly 2015</p>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="js/jquery.easing.min.js"></script>
+
+    <!-- JavaScript -->
+    <script src="js/app.js"></script>
+
+</body>
 </html>

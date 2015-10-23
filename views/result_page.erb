@@ -1,22 +1,59 @@
+<div class="index-page">
 <% erb :index%>
 
-  <% if results %>
-  <h2> Did you mean </h2>
-  <ul>
-  <% results.each do |result|%>
-  <li>
-    <form action="/save_song" method="Post">
-      <div class = "song_to_save">
-        <input type="hidden" name="result" value= '<%=result.to_json %>'>
-     <%= result[:title] %> by <%= result[:artist] %> on <%= result[:album_name]%>
-      <div class = "box">
-      <button>
-        Save
-      </button>
-    </div>
-    </form>
+<% if results %>
+    <h2> Did you mean </h2>
+    <ul>
+        <% results.each do |result|%>
+            <li>
+                <form action="/save_song" method="Post">
+                    <div class = "song_to_save">
+                        <input type="hidden" name="result" value= '<%=result.to_json %>'>
+                        <%= result[:title] %> by <%= result[:artist] %> on <%= result[:album_name]%>
+                        <div class = "box">
+                            <button>
+                                Save
+                            </button>
+                        </div>
+                </form>
 
-    </li>
-    <%end%>
+            </li>
+        <%end%>
     </ul>
-  <%end%>
+<%end%>
+</div>
+
+
+
+<!-- Result Page -->
+  <section id="results" class="content-section text-center">
+      <div class="download-section">
+          <div class="container">
+              <div class="col-lg-8 col-lg-offset-2">
+                  <h2>Playlist Results</h2>
+                  <% erb :index%>
+
+                  <% if results %>
+                      <h2> Did you mean </h2>
+                      <ul>
+                          <% results.each do |result|%>
+                              <p>
+                                  <form action="/save_song" method="Post">
+                                      <div class = "song_to_save">
+                                          <input type="hidden" name="result" value= '<%=result.to_json %>'>
+                                          <%= result[:title] %> by <%= result[:artist] %> on <%= result[:album_name]%>
+                                          <div class = "box">
+                                              <button class="btn btn-default btn-md">
+                                                  Save
+                                              </button>
+                                          </div>
+                                  </form>
+
+                              </p>
+                          <%end%>
+                      </ul>
+                  <%end%>
+              </div>
+          </div>
+      </div>
+  </section>

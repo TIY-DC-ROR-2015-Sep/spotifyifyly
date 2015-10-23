@@ -4,6 +4,10 @@ class User < ActiveRecord::Base
 
   has_many :votes
 
+  def wants_retro_layout?
+    false
+  end
+
   has_many :vetos
   has_many :songs_vetoed, through: :vetos, source: :song
   # def songs_vetoed

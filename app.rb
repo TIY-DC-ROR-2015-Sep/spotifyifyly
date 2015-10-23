@@ -65,13 +65,25 @@ class Spotifyifyly < Sinatra::Base
     end
   end
 
+  def erb_for_user template_name
+    if current_user && current_user.wants_retro_layout?
+      erb template_name, layout: :retro_layout
+    else
+      erb template_name
+    end
+  end
+
   def get_digested message
     Digest::SHA256.hexdigest message
   end
 
   get "/" do
     Playlist.top_playlist
-    erb :index
+    erb_for_user :index
+  end
+
+  get "/retro" do
+    erb :retro_layout
   end
 
   get "/about" do
@@ -79,7 +91,7 @@ class Spotifyifyly < Sinatra::Base
   end
 
   get "/login" do
-    erb :login
+    erb_for_user :login
   end
 
   post "/handle_login" do

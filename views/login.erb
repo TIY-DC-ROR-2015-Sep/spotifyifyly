@@ -21,3 +21,35 @@
        </form>
     </div>
 </div>
+
+
+<!-- Login -->
+<section id="login" class="content-section text-center">
+    <div class="download-section">
+        <div class="container">
+            <div class="col-lg-8 col-lg-offset-2">
+                <h2>Please Log In</h2>
+                <% if @error %>
+                 <p><%= @error %></p>
+                <% end %>
+
+                <form method="post" action="/handle_login" class="form-inline">
+                    <div class="form-group">
+                        <label class="sr-only" for="EmailAddress">Email address</label>
+                        <input type="email" name="email" class="form-control" id="exampleInputEmail3" placeholder="Email">
+                    </div>
+                    <div class="form-group">
+                        <label class="sr-only" for="exampleInputPassword3">Password</label>
+                        <input type="password" name="password" class="form-control" id="exampleInputPassword3" placeholder="Password">
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox"> Remember me
+                        </label>
+                    </div>
+                    <button class="btn btn-default btn-lg">Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
