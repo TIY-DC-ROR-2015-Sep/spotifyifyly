@@ -69,6 +69,10 @@ class Spotifyifyly < Sinatra::Base
     erb_for_user :index
   end
 
+  get "/retro" do
+    erb :retro_layout
+  end
+
   get "/about" do
     erb :about
   end
