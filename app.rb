@@ -156,15 +156,6 @@ class Spotifyifyly < Sinatra::Base
     erb :profile
   end
 
-  # TODO: remove this?
-  get "/suggest_song" do
-    if current_user
-      erb :addition2main, locals:{ results: nil}
-    else
-      "Please login to suggest a song"
-      erb :login
-    end
-  end
 
   post "/suggest_song" do
     login_required!
@@ -177,7 +168,7 @@ class Spotifyifyly < Sinatra::Base
     login_required!
     j = params[:result]
     t = JSON.parse(j)
-    s = Song.create( title: t["title"], suggested_by: current_user, artist: t["artist"], spotify_preview_url: t["preview_url"], album_name: t["album_name"], album_image: t["album_image"])
+    s = Song.create( title: t["title"], suggested_by: current_user, artist: t["artist"], spotify_preview_url: t["preview_url"], album_name: t["album_name"], album_image: t["album_image"], uri: t["uri"])
 
     if Playlist.add s
       set_message "Your song was added to the playlist!"
