@@ -42,7 +42,10 @@
             <% playlist.songs.each do |song| %>
               <li>
                   <strong><%= song.title %></strong> by <%= song.artist %>, suggested by <%= song.suggested_by.name.capitalize %><br>
-                  <%= song.genre %><a href="song.spotify_preview_url"> Preview on Spotify</a>
+                  <%= song.genre %>
+                  <audio controls>
+                    <source src="<%= song.spotify_preview_url %>" type="audio/mpeg">
+                  </audio>
                   <form action="/vote" method="POST">
                       <input type="hidden" name="song_id" value="<%= song.id %>">
                       <button><img src="/images/vote.gif"></button>
