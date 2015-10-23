@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <head>
 
     <meta charset="utf-8">
@@ -55,38 +54,48 @@
                     <li>
                         <a class="page-scroll" href="/about">About</a>
                     </li>
-                    <li>
-                        <a class="page-scroll" href="/profile">Profile</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="/login">Login</a>
-                    </li>
-                    <li>
-                        <a class="btn btn-default btn-sm" href="/retro">Retro Mode</a>
-                    </li>
+
+                    <% if current_user %>
+                        <li><a href="/profile"><%= current_user.name %></a></li>
+                        <li>
+                            <form action="/logout" method="POST" class="form-inline"">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <button class="btn btn-default btn-md">Logout</button>
+                            </form>
+                        </li>
+                    <% else %>
+                        <div class="container">
+                            <% if @error %>
+                                <p><%= @error %></p>
+                            <% end %>
+                            <form method="post" action="/handle_login" class="form-inline">
+                                <div class="form-group">
+                                    <label class="sr-only" for="EmailAddress">Email address</label>
+                                    <input type="email" name="email" class="form-control" id="exampleInputEmail3" placeholder="Email">
+                                </div>
+                                <div class="form-group">
+                                    <label class="sr-only" for="exampleInputPassword3">Password</label>
+                                    <input type="password" name="password" class="form-control" id="exampleInputPassword3" placeholder="Password">
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox"> Remember me
+                                    </label>
+                                </div>
+                                <button class="btn btn-default btn-sm">Login</button>
+                            </form>
+                    <% end %>
+
+
+                    <!-- <li> -->
+                       <!-- <a class="btn btn-default btn-sm" href="/retro">Retro Mode</a> -->
+                   <!-- </li> -->
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
         </div>
         <!-- /.container -->
     </nav>
-
-    <!-- Intro Header -->
-    <header class="intro">
-        <div class="intro-body">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-8 col-md-offset-2">
-                        <h1 class="brand-heading">Spotify-ifyly</h1>
-                        <p class="intro-text">A playlist creation service<br>From the brains that helped bring you somewhat functional Wookiepedia data.</p>
-                        <a href="#contact" class="btn btn-circle page-scroll">
-                            <i class="fa fa-angle-double-down animated"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
 
     <%= yield %>
 

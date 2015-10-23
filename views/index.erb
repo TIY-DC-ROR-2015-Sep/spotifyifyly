@@ -16,7 +16,60 @@
         <button>Submit song</button>
       </div>
     </form>
+
+    <br>
+
+    <div class="Songs">
+        <% Playlist.find_by_name("top_playlist").songs.each do |song| %>
+        <li>
+            <strong><%= song.title %></strong> by <%= song.artist %>, suggested by <%= song.suggested_by.name.capitalize %><br>
+            <%= song.genre %> <audio controls>
+                                <source src="<%= song.spotify_preview_url %>" type="audio/mpeg">
+                              </audio>
+            <form action="/veto" method="POST">
+                <input type="hidden" name="song_id" value="<%= song.id %>">
+                <button>Veto</button>
+            </form>
+        </li>
+        <br>
+        <% end %>
+    </div>
+
+    <div class="Songs">
+        <% Playlist.all.each do |playlist| %>
+            <% next if playlist.name == "top_playlist" %>
+            <h2 class="playlist-title"><%= playlist.name %></h2>
+            <% playlist.songs.each do |song| %>
+              <li>
+                  <strong><%= song.title %></strong> by <%= song.artist %>, suggested by <%= song.suggested_by.name.capitalize %><br>
+                  <%= song.genre %><a href="song.spotify_preview_url"> Preview on Spotify</a>
+                  <form action="/vote" method="POST">
+                      <input type="hidden" name="song_id" value="<%= song.id %>">
+                      <button><img src="/images/vote.gif"></button>
+                  </form>
+              </li>
+              <br>
+            <% end %>
+        <% end %>
+    </div>
 </div>
+
+<!-- Intro Header -->
+<header class="intro">
+    <div class="intro-body">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <h1 class="brand-heading">Spotify-ifyly</h1>
+                    <p class="intro-text">A playlist creation service<br>From the brains that helped bring you somewhat functional Wookiepedia data.</p>
+                    <a href="#playlists" class="btn btn-circle page-scroll">
+                        <i class="fa fa-angle-double-down animated"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
 
 <!-- Playlist Section -->
     <section id="playlists" class="content-section text-center">
@@ -37,13 +90,42 @@
                     <% Playlist.find_by_name("top_playlist").songs.each do |song| %>
                         <li>
                             <strong><%= song.title %></strong> by <%= song.artist %>, suggested by <%= song.suggested_by.name.capitalize %><br>
-                            <%= song.genre %><a href="song.spotify_preview_url"> Preview on Spotify</a>
+                            <%= song.genre %><audio controls>
+                                <source src="<%= song.spotify_preview_url %>" type="audio/mpeg">
+                            </audio>
                             <form action="/veto" method="POST">
                                 <input type="hidden" name="song_id" value="<%= song.id %>">
                                 <button class="btn btn-default btn-md">Veto</button>
                             </form>
                         </li>
                         <br>
+                    <% end %>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Songs that haven't been added to the playlist -->
+    <section id="playlists" class="content-section text-center">
+        <div class="download-section">
+            <div class="container">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <h2>Suggested Songs</h2>
+                    <% Playlist.all.each do |playlist| %>
+                        <% next if playlist.name == "top_playlist" %>
+                        <h2 class="playlist-title"><%= playlist.name %></h2>
+                        <% playlist.songs.each do |song| %>
+                            <li>
+                                <strong><%= song.title %></strong> by <%= song.artist %>, suggested by <%= song.suggested_by.name.capitalize %><br>
+                                <%= song.genre %><a href="song.spotify_preview_url"> Preview on Spotify</a>
+                                <form action="/vote" method="POST">
+                                    <input type="hidden" name="song_id" value="<%= song.id %>">
+                                    <button class="btn btn-default btn-md">Vote</button>
+                                </form>
+                            </li>
+                            <br>
+                        <% end %>
                     <% end %>
                 </div>
             </div>

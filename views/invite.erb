@@ -1,3 +1,14 @@
+<% if @new_user.errors.any? %>
+  <div class="error">
+    <p>Hold up!</p>
+    <ul>
+      <% @new_user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
 <div class="invite">
     <form method="post" action="/invite">
         <label>
@@ -7,10 +18,6 @@
         <label>
             Email
             <input type="text" name="email" value="<%= @new_user.email %>">
-        </label>
-        <label>
-            Password
-            <input type="password" name="password">
         </label>
         <button>Invite</button>
     </form>
@@ -29,15 +36,11 @@
                 <form method="post" action="/invite" class="form-inline">
                 <div class="form-group">
                         <label class="sr-only" for="Name">Name</label>
-                        <input type="text" class="form-control" id="Name3" placeholder="Name" value="<%= @new_user.name %>">
+                        <input type="text" name="name" class="form-control" id="Name3" placeholder="Name" value="<%= @new_user.name %>">
                 </div>
                 <div class="form-group">
                         <label class="sr-only" for="EmailAddress">Email address</label>
-                        <input type="text" class="form-control" id="Email3" placeholder="Email" value="<%= @new_user.email %>">
-                </div>
-                <div class="form-group">
-                    <label class="sr-only" for="exampleInputPassword3">Password</label>
-                    <input type="password" name="password" class="form-control" id="Password3" placeholder="Password">
+                        <input type="text" name="email" class="form-control" id="Email3" placeholder="Email" value="<%= @new_user.email %>">
                 </div>
                 <button class="btn btn-default btn-lg">Invite</button>
                </form>
