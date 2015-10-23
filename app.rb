@@ -178,6 +178,26 @@ class Spotifyifyly < Sinatra::Base
     redirect to("/")
   end
 
+  get "/change_password" do
+    login_required!
+    erb :change_password
+  end
+
+  post "/change_password" do
+    login_required!
+    if params[:oldpass] != current_user.password
+      set_message "Your old password was entered incorrectly"
+      redirect to "/change_password"
+    elsif params[:newpass] != params[:newpass2] || params[:newpass].length < 6
+      set_message "Your passwords must match and be more than 6 characters"
+      redirect to "/change_password"
+    else
+      current_user.update password: params[:newpass]
+      set_message "Your password was changed"
+      redirect to "/profile"
+    end
+  end
+
   get "/playlists" do
     login_required!
     Search.refresh_if_needed do
@@ -186,7 +206,6 @@ class Spotifyifyly < Sinatra::Base
     "Ok"
   end
 
-end
 
 if $PROGRAM_NAME == __FILE__
   Spotifyifyly.run!
