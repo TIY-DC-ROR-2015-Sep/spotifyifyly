@@ -65,6 +65,10 @@ class Spotifyifyly < Sinatra::Base
     end
   end
 
+  def get_digested message
+    Digest::SHA256.hexdigest message
+  end
+
   get "/" do
     Playlist.top_playlist
     erb :index
@@ -81,7 +85,7 @@ class Spotifyifyly < Sinatra::Base
   post "/handle_login" do
     found = User.where(
       email:    params[:email],
-      password: params[:password]
+      password: (get_digested params[:password])
     ).first
 
     if found
@@ -102,10 +106,11 @@ class Spotifyifyly < Sinatra::Base
 
   post "/invite" do
     admin_required!
+    temp_password = 'hunter2' #('a'..'z').to_a.shuffle[0,8].join 
     @new_user = User.new
     @new_user.name = params[:name]
     @new_user.email = params[:email]
-    @new_user.password = params[:password]
+    @new_user.password = get_digested temp_password
     if @new_user.save
       set_message "User has been created"
       redirect to("/invite")
@@ -185,14 +190,14 @@ class Spotifyifyly < Sinatra::Base
 
   post "/change_password" do
     login_required!
-    if params[:oldpass] != current_user.password
+    if ( get_digested params[:oldpass] ) != current_user.password
       set_message "Your old password was entered incorrectly"
       redirect to "/change_password"
-    elsif params[:newpass] != params[:newpass2] || params[:newpass].length < 6
+    elsif ( params[:newpass] != params[:newpass2] ) || ( params[:newpass].length < 6 )
       set_message "Your passwords must match and be more than 6 characters"
       redirect to "/change_password"
     else
-      current_user.update password: params[:newpass]
+      current_user.update! password: (get_digested params[:newpass])
       set_message "Your password was changed"
       redirect to "/profile"
     end
@@ -205,6 +210,7 @@ class Spotifyifyly < Sinatra::Base
     end
     "Ok"
   end
+end
 
 
 if $PROGRAM_NAME == __FILE__
