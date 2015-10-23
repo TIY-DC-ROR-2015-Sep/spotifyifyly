@@ -22,12 +22,13 @@ class Email
   end
 
   def invite_user_mail
-    t = @email
+    address = @email
+    pass = @password
     Mail.deliver do
-      to t
+      to address
       from 'admin@spotifyifyly.com'
       subject "You've been invited to Spotifyifyly"
-      body 'You can log in with your email. Your temporary password is #{@password}. Please use your profile to change this password once you are logged in.'
+      body "You can log in with your email. Your temporary password is #{pass}. Please use your profile to change this password once you are logged in. https://spotifyifyly.herokuapp.com/"
     end
   end
 end
