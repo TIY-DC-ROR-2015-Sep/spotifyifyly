@@ -65,6 +65,10 @@ class Spotifyifyly < Sinatra::Base
     end
   end
 
+  def get_digested message
+    Digest::SHA256.hexdigest message
+  end
+
   get "/" do
     Playlist.top_playlist
     erb :index
@@ -81,7 +85,7 @@ class Spotifyifyly < Sinatra::Base
   post "/handle_login" do
     found = User.where(
       email:    params[:email],
-      password: params[:password]
+      password: (get_digested params[:password])
     ).first
 
     if found
@@ -102,10 +106,11 @@ class Spotifyifyly < Sinatra::Base
 
   post "/invite" do
     admin_required!
+    temp_password = 'hunter2' #('a'..'z').to_a.shuffle[0,8].join 
     @new_user = User.new
     @new_user.name = params[:name]
     @new_user.email = params[:email]
-    @new_user.password = params[:password]
+    @new_user.password = get_digested temp_password
     if @new_user.save
       set_message "User has been created"
       redirect to("/invite")
@@ -156,16 +161,6 @@ class Spotifyifyly < Sinatra::Base
     erb :profile
   end
 
-  # TODO: remove this?
-  get "/suggest_song" do
-    if current_user
-      erb :addition2main, locals:{ results: nil}
-    else
-      "Please login to suggest a song"
-      erb :login
-    end
-  end
-
   post "/suggest_song" do
     login_required!
     s = params[:suggested_song].to_s
@@ -177,14 +172,35 @@ class Spotifyifyly < Sinatra::Base
     login_required!
     j = params[:result]
     t = JSON.parse(j)
-    s = Song.create( title: t["title"], suggested_by: current_user, artist: t["artist"], spotify_preview_url: t["preview_url"], album_name: t["album_name"], album_image: t["album_image"])
+    s = Song.create( title: t["title"], suggested_by: current_user, artist: t["artist"], spotify_preview_url: t["preview_url"], album_name: t["album_name"], album_image: t["album_image"], uri: t["uri"])
 
     if Playlist.add s
+      Vote.create! user_id: current_user.id, song_id: s.id
       set_message "Your song was added to the playlist!"
     else
       set_message "Your song is already on a playlist!"
     end
     redirect to("/")
+  end
+
+  get "/change_password" do
+    login_required!
+    erb :change_password
+  end
+
+  post "/change_password" do
+    login_required!
+    if ( get_digested params[:oldpass] ) != current_user.password
+      set_message "Your old password was entered incorrectly"
+      redirect to "/change_password"
+    elsif ( params[:newpass] != params[:newpass2] ) || ( params[:newpass].length < 6 )
+      set_message "Your passwords must match and be more than 6 characters"
+      redirect to "/change_password"
+    else
+      current_user.update! password: (get_digested params[:newpass])
+      set_message "Your password was changed"
+      redirect to "/profile"
+    end
   end
 
   get "/playlists" do
@@ -194,8 +210,8 @@ class Spotifyifyly < Sinatra::Base
     end
     "Ok"
   end
-
 end
+
 
 if $PROGRAM_NAME == __FILE__
   Spotifyifyly.run!
