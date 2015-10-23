@@ -8,7 +8,7 @@ gem 'did_you_mean'
 gem 'sinatra'
 gem 'httparty'
 gem 'gravatarify'
-
+gem 'mail'
 gem 'rollbar'
 
 group :development do
