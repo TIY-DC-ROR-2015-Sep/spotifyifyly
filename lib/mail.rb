@@ -1,22 +1,32 @@
+require "./db/setup"
+require "./lib/all"
 require 'mail'
 
-Mail.defaults do
-  delivery_method :smtp, {
-    :address => 'smtp.mailgun.org',
-    :port => '587',
-    :domain => 'appcc3784cba03248a9b22b45f6494fec0e.mailgun.org',
-    :user_name => 'postmaster@appcc3784cba03248a9b22b45f6494fec0e.mailgun.org',
-    :password => 'c7a91e23466debad3f250c854d2ebfb7',
-    :authentication => :plain,
-    :enable_starttls_auto => true
-                  }
-end
+class EmailUser
 
-def invite_user_mail
-  Mail.deliver do
-    to ''
-    from 'admin@spotifyifyly.com'
-    subject 'testing send mail'
-    body 'Sending email with Ruby through SendGrid!'
+  def initialize user, password
+    @email = user.email
+    @password = password
+  end
+
+  Mail.defaults do
+    delivery_method :smtp, {
+      :address => 'smtp.mailgun.org',
+      :port => '587',
+      :domain => ENV["MAILGUN_DOMAIN"] || File.read("mailgun_domain.txt").chomp,
+      :user_name => ENV["MAILGUN_SMTP_LOGIN"] || File.read("mailgun_user_name.txt").chomp,
+      :password => ENV["MAILGUN_SMTP_PASSWORD"] || File.read("mailgun_password.txt").chomp,
+      :authentication => :plain,
+      :enable_starttls_auto => true
+                    }
+  end
+
+  def invite_user_mail
+    Mail.deliver do
+      to @email
+      from 'admin@spotifyifyly.com'
+      subject "You've been invited to Spotifyifyly"
+      body 'You can log in with your email. Your temporary password is #{@password}. Please use your profile to change this password once you are logged in.'
+    end
   end
 end
